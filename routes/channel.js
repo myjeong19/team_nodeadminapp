@@ -3,8 +3,8 @@
 var express = require('express');
 var router = express.Router();
 
-//localhost:3001/channel/list
-router.get('/list', async(req,res)=>{
+//localhost:3001/channel
+router.get('/', async(req,res)=>{
     res.render('channel/list');
 });
 
@@ -27,20 +27,24 @@ router.post('/create', async(req,res)=>{
         userLimit
     };
 
-    res.redirect('/channel/list');
+    res.redirect('/channel');
 });
 
 //localhost:3001/channel/modify
 router.get('/modify', async(req,res)=>{
 
     //임시로 전달할 예제 객체
-    // var channel={
-    //     
-    // }
+    var channel={
+        title:"새채팅방",
+        channelId:0,
+        status:"활동중",
+        userLimit:100
+    };
 
-    res.render('channel/modify');
+    res.render('channel/modify', {channel});
 });
 
+//localhost:3001/channel/modify
 router.post('/modify', async(req,res)=>{
     var title=req.body.title;
     var userLimit=req.body.userLimit;
@@ -51,7 +55,7 @@ router.post('/modify', async(req,res)=>{
         userLimit
     };
 
-    res.redirect('/channel/list');
+    res.redirect('/channel');
 });
 
 router.get('/delete', async(req,res)=>{
