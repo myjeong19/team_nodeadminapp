@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+  <head>
+    <title>메시지 정보 관리 페이지</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <nav>
+      <strong><a href="/message"> 메시지 정보 관리</a></strong>
+      <a href="/main">전체 관리 페이지</a>
+      <a href="/message/create">생성</a>
+      <a href="/message/list">목록</a>
+      <p>수정</p>
+    </nav>
+
+    <form action="/message/modify" method="post">
+      <button type="submit">수정하기</button>
+    </form>
+  </body>
+</html>

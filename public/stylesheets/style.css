@@ -6,10 +6,8 @@
 body {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
-
-  font: 14px 'Lucida Grande', Helvetica, Arial, sans-serif;
 }
 
 a {
@@ -18,9 +16,7 @@ a {
   text-decoration: none;
 }
 
-nav,
-main,
-.form {
+nav {
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -30,26 +26,39 @@ nav {
   box-shadow: 1px 6px 5px 0px rgba(0, 0, 0, 0.61);
   -webkit-box-shadow: 1px 6px 5px 0px rgba(0, 0, 0, 0.61);
   -moz-box-shadow: 1px 6px 5px 0px rgba(0, 0, 0, 0.61);
-  width: 90vw;
+  width: 80vw;
   height: 8vh;
   margin-bottom: 5rem;
 }
 
-main {
+main,
+form {
+  display: flex;
   flex-direction: column;
-  width: 90vw;
-  height: 80vh;
+  justify-content: center;
+  align-items: center;
+}
+
+main {
+  width: 80vw;
+  height: 70vh;
   box-shadow: 1px 6px 5px 0px rgba(0, 0, 0, 0.61);
   -webkit-box-shadow: 1px 6px 5px 0px rgba(0, 0, 0, 0.61);
   -moz-box-shadow: 1px 6px 5px 0px rgba(0, 0, 0, 0.61);
 }
 
+form {
+  width: 80vw;
+  height: 50vh;
+}
+
 label {
   display: inline-block;
-  width: 10rem;
+  width: 8rem;
 }
 
 button {
+  margin-top: 1rem;
   width: 10rem;
   height: 3.5rem;
   border: none;
