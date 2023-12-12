@@ -3,8 +3,8 @@
 var express = require('express');
 var router = express.Router();
 
-//localhost:3001/article/list
-router.get('/list', async(req,res)=>{
+//localhost:3001/article
+router.get('/', async(req,res)=>{
     res.render('article/list');
 });
 
@@ -30,7 +30,7 @@ router.post('/create', async(req,res)=>{
         registDate:Date.now()
     };
 
-    res.redirect('/article/list');
+    res.redirect('/article');
 });
 
 //localhost:3001/article/modify
@@ -49,6 +49,7 @@ router.get('/modify', async(req,res)=>{
     res.render('article/modify', {article});
 });
 
+//localhost:3001/article/modify
 router.post('/modify', async(req,res)=>{
     var title=req.body.title;
     var contents=req.body.contents;
@@ -62,7 +63,7 @@ router.post('/modify', async(req,res)=>{
         registDate:Date.now()
     };
 
-    res.redirect('/article/list');
+    res.redirect('/article');
 });
 
 router.get('/delete', async(req,res)=>{

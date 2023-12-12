@@ -6,6 +6,17 @@
     </head>
 
     <body>
+        <style>
+            h1 {
+                font-size: calc(1.375rem + 1.5vw);
+                color: #008cba;
+            }
+    
+            button {
+                background-color: #008cba;
+                color: white;
+            }
+        </style>
         <h1>새 채팅방 만들기</h1>
         <form action="/channel/create" method="post">
         채팅방 이름:<input type="text" name="title"><br/>
