@@ -1,91 +1,77 @@
-/*---------------------------------------------*/
-/* login */
-/*---------------------------------------------*/
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+* {
+  box-sizing: border-box;
   margin: 0;
-  padding: 0;
+}
+
+body {
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
   align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background: url('../images/galaxy.jpg') center/cover no-repeat; /* 이미지 경로 수정 */
+
+  font: 14px 'Lucida Grande', Helvetica, Arial, sans-serif;
 }
 
-.signup-container {
-  background: rgba(255, 255, 255, 0.8);
-  border-radius: 8px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  width: 400px;
-  max-width: 100%;
-  padding: 40px;
-  box-sizing: border-box;
+a {
+  padding: 1rem;
+  color: #0045bb;
+  text-decoration: none;
 }
 
-.signup-container h2 {
-  text-align: center;
-  color: #333;
-  margin-bottom: 20px;
-}
-
-.signup-form {
+nav,
+main,
+.form {
   display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+nav {
+  box-shadow: 1px 6px 5px 0px rgba(0, 0, 0, 0.61);
+  -webkit-box-shadow: 1px 6px 5px 0px rgba(0, 0, 0, 0.61);
+  -moz-box-shadow: 1px 6px 5px 0px rgba(0, 0, 0, 0.61);
+  width: 90vw;
+  height: 8vh;
+  margin-bottom: 5rem;
+}
+
+main {
   flex-direction: column;
+  width: 90vw;
+  height: 80vh;
+  box-shadow: 1px 6px 5px 0px rgba(0, 0, 0, 0.61);
+  -webkit-box-shadow: 1px 6px 5px 0px rgba(0, 0, 0, 0.61);
+  -moz-box-shadow: 1px 6px 5px 0px rgba(0, 0, 0, 0.61);
 }
 
-.form-group {
-  margin-bottom: 20px;
+label {
+  display: inline-block;
+  width: 10rem;
 }
 
-.form-group label {
-  font-weight: bold;
-  margin-bottom: 8px;
-  display: block;
-  color: #555;
-}
-
-.form-group input {
-  padding: 12px;
-  font-size: 16px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  width: 100%;
-  box-sizing: border-box;
-  margin-top: 8px;
-}
-
-.form-group button {
-  background: #4caf50;
-  color: #fff;
-  padding: 12px;
-  font-size: 16px;
+button {
+  width: 10rem;
+  height: 3.5rem;
   border: none;
-  border-radius: 6px;
   cursor: pointer;
+  background-color: #111;
+  color: #fff;
   transition: 1s all;
 }
 
-.form-group button:hover {
-  background: #45a049;
+button:hover {
+  background-color: #0045bb;
 }
 
-.form-group p {
-  margin-top: 16px;
-  text-align: center;
-  color: #888;
+.form {
+  flex-direction: column;
+  width: 100%;
 }
 
-.form-group a {
-  color: #4caf50;
-  text-decoration: none;
-  font-weight: bold;
+.form div {
+  margin-bottom: 1rem;
 }
 
-.form-group a:hover {
-  text-decoration: underline;
+.info {
+  height: 0vh;
 }
-
-/*---------------------------------------------*/
-/*---------------------------------------------*/
