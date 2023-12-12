@@ -1,15 +1,144 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>
-            게시글 목록 페이지
-        </title>
-    </head>
 
-    <body>
-        <h1>게시글 목록</h1>
-        <a href="/article/create">신규 게시글 작성</a><br/>
-        <a href="/article/modify">게시글 수정</a><br/>
-        <a href="/article/delete">게시글 삭제</a><br/>
-    </body>
+<head>
+    <title>
+        게시글 목록 페이지
+    </title>
+</head>
+
+<body>
+    <h1>게시글 목록</h1>
+    <style>
+        h1 {
+            font-size: calc(1.375rem + 1.5vw);
+            color: #008cba;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            float: left;
+            margin: 0 0 2em;
+
+            thead {
+                border-bottom: 3px solid #008cba;
+
+                th {
+                    padding: 0.35em 0 .35em;
+                    font-weight: 400;
+                    text-align: left;
+                    font-size: 1.25em;
+                }
+
+            }
+
+            tbody {
+                border-bottom: 3px solid #008cba;
+
+                tr {
+                    border-bottom: 2px solid #ddd;
+
+                    td {
+                        padding: .75em 0;
+
+                        a {
+                            color: #008cba;
+                            text-decoration: none;
+                            display: inline-block;
+                            margin: 0 .5em 0 0;
+
+                            &:hover,
+                            &:active,
+                            &:focus {
+                                color: darken(#008cba, 10%);
+                                border: none;
+                            }
+                        }
+                    }
+                }
+            }
+
+            tfoot {
+                td {
+                    padding: 0.35em 0 .35em;
+
+                    text-align: left;
+                    font-size: 1.25em;
+                }
+            }
+        }
+
+        @media screen and (min-width: 1000px) {
+            table {
+                width: 100%;
+
+                thead {
+                    border-bottom: 3px solid #008cba;
+
+                    th {}
+
+                }
+
+                tbody {
+                    tr {
+                        border-bottom: 1px solid #ddd;
+
+                        td {}
+                    }
+                }
+            }
+        }
+    </style>
+
+    <table>
+        <thead>
+            <tr>
+                <th>글번호</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>작성일</th>
+            </tr>
+        </thead>
+        <!-- 테스트용 임시 데이터 -->
+        <tbody>
+            <tr>
+                <th>1</th>
+                <th>라우팅메소드</th>
+                <th>최유진</th>
+                <th>today</th>
+            </tr>
+            <tr>
+                <th>2</th>
+                <th>템플릿 적용하기-css기초</th>
+                <th>최유진</th>
+                <th>today</th>
+            </tr>
+            <tr>
+                <th>3</th>
+                <th>병합충돌 해결하기</th>
+                <th>정민영</th>
+                <th></th>
+            </tr>
+        </tbody>
+        <tbody>
+            <tr>
+                <th>0</th>
+                <th>임시저장글</th>
+                <th>윤성원</th>
+                <th></th>
+            </tr>
+            <tr>
+                <th>0</th>
+                <th>임시저장글2</th>
+                <th>오영석</th>
+                <th></th>
+            </tr>
+        </tbody>
+    </table><br />
+
+    <a href="/article/create">▶신규 게시글 작성</a><br />
+    <a href="/article/modify">▶게시글 수정</a><br />
+</body>
+
 </html>

@@ -6,6 +6,17 @@
     </head>
 
     <body>
+        <style>
+            h1 {
+                font-size: calc(1.375rem + 1.5vw);
+                color: #008cba;
+            }
+    
+            button {
+                background-color: #008cba;
+                color: white;
+            }
+        </style>
         <h1>기존 게시글 확인 및 수정/삭제</h1>
         <form action="/article/modify" method="post">
         제목:<input type="text" name="title" value="<%=article.title%>"><br/>
@@ -13,8 +24,8 @@
         </textarea><br/>
         등록자:<input type="text" name="register" value="<%=article.reister%>" /><br/>
         <input type="submit" value="수정"/>
-        <button href="/article/list">목록</button><br/>
-        <button href="/article/delete">게시글 삭제</button>
+        <button href="/channel/list">목록</button>
+        <button href="/channel/delete">삭제</button>
         </form>
     </body>
 </html>

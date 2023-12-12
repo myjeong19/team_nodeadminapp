@@ -1,15 +1,144 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>
-            관리자 계정 정보 리스트
-        </title>
-    </head>
 
-    <body>
-        <h1>채팅방 관리</h1>
-        <a href="/channel/create">새 채팅방 생성</a><br/>
-        <a href="/channel/modify">채팅방 정보 수정</a><br/>
-        <a href="/channel/delete">채팅방 삭제</a><br/>
-    </body>
+<head>
+    <title>
+        채팅방 목록 페이지
+    </title>
+</head>
+
+<body>
+    <h1>채팅방 목록</h1>
+    <style>
+        h1 {
+            font-size: calc(1.375rem + 1.5vw);
+            color: #008cba;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            float: left;
+            margin: 0 0 2em;
+
+            thead {
+                border-bottom: 3px solid #008cba;
+
+                th {
+                    padding: 0.35em 0 .35em;
+                    font-weight: 400;
+                    text-align: left;
+                    font-size: 1.25em;
+                }
+
+            }
+
+            tbody {
+                border-bottom: 3px solid #008cba;
+
+                tr {
+                    border-bottom: 2px solid #ddd;
+
+                    td {
+                        padding: .75em 0;
+
+                        a {
+                            color: #008cba;
+                            text-decoration: none;
+                            display: inline-block;
+                            margin: 0 .5em 0 0;
+
+                            &:hover,
+                            &:active,
+                            &:focus {
+                                color: darken(#008cba, 10%);
+                                border: none;
+                            }
+                        }
+                    }
+                }
+            }
+
+            tfoot {
+                td {
+                    padding: 0.35em 0 .35em;
+
+                    text-align: left;
+                    font-size: 1.25em;
+                }
+            }
+        }
+
+        @media screen and (min-width: 1000px) {
+            table {
+                width: 100%;
+
+                thead {
+                    border-bottom: 3px solid #008cba;
+
+                    th {}
+
+                }
+
+                tbody {
+                    tr {
+                        border-bottom: 1px solid #ddd;
+
+                        td {}
+                    }
+                }
+            }
+        }
+    </style>
+
+    <table>
+        <thead>
+            <tr>
+                <th>채팅방ID</th>
+                <th>채팅방 이름</th>
+                <th>상태</th>
+                <th>참여유저수</th>
+            </tr>
+        </thead>
+        <!-- 테스트용 임시 데이터 -->
+        <tbody>
+            <tr>
+                <th>1</th>
+                <th>해피인천</th>
+                <th>활동중</th>
+                <th>3</th>
+            </tr>
+            <tr>
+                <th>2</th>
+                <th>gang기도</th>
+                <th>활동중</th>
+                <th>3</th>
+            </tr>
+            <tr>
+                <th>3</th>
+                <th>모름캠프</th>
+                <th>활동중</th>
+                <th>4</th>
+            </tr>
+            <tr>
+                <th>4</th>
+                <th>k-triad</th>
+                <th>활동중</th>
+                <th>3</th>
+            </tr>
+        </tbody>
+        <tbody>
+            <tr>
+                <th>123</th>
+                <th>오름캠프 운영방</th>
+                <th>휴식중</th>
+                <th>10</th>
+            </tr>
+        </tbody>
+    </table><br />
+
+    <a href="/article/create">▶신규 채팅방 생성</a><br />
+    <a href="/article/modify">▶채팅방 정보 수정</a><br />
+</body>
+
 </html>

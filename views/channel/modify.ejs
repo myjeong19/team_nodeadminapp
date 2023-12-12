@@ -6,12 +6,16 @@
     </head>
 
     <body>
+        <style>
+            button {background-color:#008cba; color: white;}
+        </style>
         <h1>채팅방 정보 수정하기</h1>
         <form action="/channel/modify" method="post">
         채팅방 이름:<input type="text" name="title"><br/>
         유저상한제한:<input type="text" name="userLimit" /><br/>
         <input type="submit" value="저장"/>
-        <a href="/channel/list">목록</a>
+        <button href="/channel/list">목록</button>
+        <button href="/channel/delete">삭제</button>
         </form>
     </body>
 </html>
