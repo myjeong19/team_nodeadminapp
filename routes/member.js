@@ -1,20 +1,20 @@
-var express = require("express");
+var express = require('express');
 var router = express.Router();
 
 /* GET home page. */
 
-router.get("/", async (req, res, next) => {
+router.get('/list', async (req, res, next) => {
   var member_list = [
     {
       member_id: 1,
-      email: "hwoarang09@naver.com",
-      member_password: "맴버1비번",
-      name: "윤성원",
-      profile_img_path: "멤버1이미지주소",
-      telephone: "01022883839",
+      email: 'hwoarang09@naver.com',
+      member_password: '맴버1비번',
+      name: '윤성원',
+      profile_img_path: '멤버1이미지주소',
+      telephone: '01022883839',
       entry_type_code: 1,
       use_state_code: 1,
-      birth_date: "900311",
+      birth_date: '900311',
       reg_date: Date.now(),
       reg_member_id: 881,
       edit_date: Date.now(),
@@ -22,14 +22,14 @@ router.get("/", async (req, res, next) => {
     },
     {
       member_id: 2,
-      email: "rang0909@naver.com",
-      member_password: "맴버2비번",
-      name: "윤성일",
-      profile_img_path: "멤버2이미지주소",
-      telephone: "01122883839",
+      email: 'rang0909@naver.com',
+      member_password: '맴버2비번',
+      name: '윤성일',
+      profile_img_path: '멤버2이미지주소',
+      telephone: '01122883839',
       entry_type_code: 1,
       use_state_code: 1,
-      birth_date: "910312",
+      birth_date: '910312',
       reg_date: Date.now(),
       reg_member_id: 882,
       edit_date: Date.now(),
@@ -37,14 +37,14 @@ router.get("/", async (req, res, next) => {
     },
     {
       member_id: 3,
-      email: "a01022883839@gmail.ocm",
-      member_password: "맴버3비번",
-      name: "윤성삼",
-      profile_img_path: "멤버3이미지주소",
-      telephone: "01222883839",
+      email: 'a01022883839@gmail.ocm',
+      member_password: '맴버3비번',
+      name: '윤성삼',
+      profile_img_path: '멤버3이미지주소',
+      telephone: '01222883839',
       entry_type_code: 0,
       use_state_code: 0,
-      birth_date: "900313",
+      birth_date: '900313',
       reg_date: Date.now(),
       reg_member_id: 883,
       edit_date: Date.now(),
@@ -52,14 +52,14 @@ router.get("/", async (req, res, next) => {
     },
   ];
 
-  res.render("member/list", { member_list });
+  res.render('member/list', { member_list });
 });
 
-router.get("/create", async (req, res, next) => {
-  res.render("member/create", { title: "member/create" });
+router.get('/create', async (req, res, next) => {
+  res.render('member/create', { title: 'member/create' });
 });
 
-router.post("/create", async (req, res, next) => {
+router.post('/create', async (req, res, next) => {
   var member_id = req.body.member_id;
   var email = req.body.email;
   var member_password = req.body.member_password;
@@ -88,33 +88,33 @@ router.post("/create", async (req, res, next) => {
     edit_member_id,
   };
 
-  console.log("member : ", member);
-  res.redirect("/member");
+  console.log('member : ', member);
+  res.redirect('/member');
 });
 
-router.get("/modify/:member_id", async (req, res, next) => {
+router.get('/modify/:member_id', async (req, res, next) => {
   var member_id = req.params.member_id;
 
   var member = {
     member_id,
-    email: "a01022883839@gmail.ocm",
-    member_password: "맴버3비번",
-    name: "윤성삼",
-    profile_img_path: "멤버3이미지주소",
-    telephone: "01222883839",
+    email: 'a01022883839@gmail.ocm',
+    member_password: '맴버3비번',
+    name: '윤성삼',
+    profile_img_path: '멤버3이미지주소',
+    telephone: '01222883839',
     entry_type_code: 0,
     use_state_code: 0,
-    birth_date: "900313",
+    birth_date: '900313',
     reg_date: Date.now(),
     reg_member_id: 883,
     edit_date: Date.now(),
     edit_member_id: 993,
   };
 
-  res.render("member/modify", { member });
+  res.render('member/modify', { member });
 });
 
-router.post("/modify/:member_id", async (req, res, next) => {
+router.post('/modify/:member_id', async (req, res, next) => {
   var member_id = req.body.member_id;
   var email = req.body.email;
   var member_password = req.body.member_password;
@@ -143,15 +143,15 @@ router.post("/modify/:member_id", async (req, res, next) => {
     edit_member_id,
   };
 
-  console.log("member modify: ", member);
+  console.log('member modify: ', member);
 
-  res.redirect("/member");
+  res.redirect('/member');
 });
 
-router.get("/delete", async (req, res, next) => {
+router.get('/delete', async (req, res, next) => {
   var member_id = req.query.member_id;
-  console.log("member_id in delte ", member_id);
-  res.redirect("/member");
+  console.log('member_id in delte ', member_id);
+  res.redirect('/member');
 });
 
 module.exports = router;
