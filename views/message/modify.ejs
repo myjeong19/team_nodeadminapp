@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="ko">
+<!-- <html lang="ko">
   <head>
     <title>메시지 정보 관리 페이지</title>
     <link rel="stylesheet" href="/stylesheets/style.css" />
@@ -18,4 +18,26 @@
       <button type="submit">수정하기</button>
     </form>
   </body>
+</html> -->
+
+
+<html>
+    <head>
+        <title>채팅 정보 확인 및 수정/삭제</title>
+    </head>
+
+    <body>
+        <h1>채팅 정보 확인 및 수정/삭제</h1>
+        
+        <form action="/message/modify/<%=messageDB.channelNum%>" method="post">
+            아이디:<input type="text" name="chatId" value="<%=messageDB.chatId%>"/> <br/>
+            닉네임:<textarea name="nickName" rows="20" cols="10" style="width:90%"><%=messageDB.nickName%>
+            </textarea> <br/>
+            메시지:<input type="text" name="message" value="<%=messageDB.message%>"/> <br/>
+            <input type="submit" value="수정" />
+            <a href="/message/delete?idx=<%=messageDB.channelNum%>">삭제</a><br/>
+            <a href="/message">채팅 목록 이동</a>
+        </form>
+        
+    </body>
 </html>
