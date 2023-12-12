@@ -6,11 +6,11 @@ const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-// const adminRouter = require('./routes/admin');
-// const channelRouter = require('./routes/channel');
-// const memberRouter = require('./routes/member');
-// const messageRouter = require('./routes/message');
-// const articleRouter = require('./routes/article');
+const adminRouter = require('./routes/admin');
+const channelRouter = require('./routes/channel');
+const memberRouter = require('./routes/member');
+const messageRouter = require('./routes/message');
+const articleRouter = require('./routes/article');
 
 const app = express();
 
@@ -27,10 +27,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/admin', adminRouter);
-// app.use('/article', articleRouter);
-// app.use('/channel', channelRouter);
-// app.use('/member', memberRouter);
-// app.use('/message', messageRouter);
+app.use('/article', articleRouter);
+app.use('/channel', channelRouter);
+app.use('/member', memberRouter);
+app.use('/message', messageRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
