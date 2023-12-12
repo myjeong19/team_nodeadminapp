@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="ko">
+<!-- <html lang="ko">
   <head>
     <title>메세지 정보 관리 페이지</title>
     <link rel="stylesheet" href="/stylesheets/style.css" />
@@ -16,6 +16,23 @@
 
     <form action="/message/create" method="post">
       <button type="submit">생성하기</button>
+    </form>
+  </body>
+</html> -->
+
+<html>
+  <head>
+    <title>신규 채팅정보 관리</title>
+  </head>
+
+  <body>
+    <h1>신규 채팅정보 관리</h1>
+
+    <form action="/message/create" method="post">
+      아이디: <input type="text" name="chatId"><br/>
+      닉네임: <input type="text" name="nickName"><br/>
+      메시지: <textarea name="message" cols="50" rows="10"></textarea><br/>
+      <input type="submit" value="전달">
     </form>
   </body>
 </html>

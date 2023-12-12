@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="ko">
+<!-- <html lang="ko">
   <head>
     <title>메시지 정보 관리 페이지</title>
     <link rel="stylesheet" href="/stylesheets/style.css" />
@@ -13,5 +13,61 @@
       <p>목록</p>
       <a href="/message/modify">수정</a>
     </nav>
+  </body>
+</html>-->
+
+
+<html>
+  <head>
+    <title>채팅 이력 정보</title>
+  </head>
+
+  <body>
+    <h1>채팅 이력 정보</h1>
+
+    <table>
+      <thead>
+        <tr>
+          <th>채널고유번호</th>
+          <th>사용자고유번호</th>
+          <th>채팅닉네임</th>
+          <th>로깅유형코드</th>
+          <th>채팅고유커넥션아이디</th>
+          <th>원본채팅메시지</th>
+          <th>IP주소</th>
+          <th>최상위메시지고유번호</th>
+          <th>메시지상태코드</th>
+          <th>등록일시</th>
+          <th>수정일시</th>
+          <th>삭제일시</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+
+         <% for(var i=0;i<messages.length;i++) {%>
+                    <tr>
+                        <td>
+                            <a href="/message/modify/<%=messages[i].channelNum%>">
+                                <%=messages[i].channelNum%>
+                            </a>
+                        </td>
+                        <td><%=messages[i].adminNum%></td>
+                        <td><%=messages[i].nickName%></td>
+                        <td><%=messages[i].logging%></td>
+                        <td><%=messages[i].chatId%></td>
+                        <td><%=messages[i].message%></td>
+                        <td><%=messages[i].ipAddress%></td>
+                        <td><%=messages[i].topNum%></td>
+                        <td><%=messages[i].statusMessage%></td>
+                        <td><%=messages[i].saveDate%></td>
+                        <td><%=messages[i].editDate%></td>
+                        <td><%=messages[i].deleteDate%></td>
+                    </tr>
+                <% } %>
+      </tbody>
+    </table>
+    <a href="/message/create">신규 채팅 만들기</a>
   </body>
 </html>
