@@ -3,6 +3,8 @@ var router = express.Router();
 
 /* GET home page. */
 
+router.get;
+
 router.get('/list', async (req, res, next) => {
   var admin_members = [
     {
@@ -84,7 +86,7 @@ router.post('/create', async (req, res, next) => {
   };
 
   console.log('admin : ', admin);
-  res.redirect('/admin');
+  res.redirect('/admin/list');
 });
 
 router.get('/modify/:admin_id', async (req, res, next) => {
@@ -137,13 +139,13 @@ router.post('/modify/:admin_id', async (req, res, next) => {
 
   console.log('admin modify: ', admin);
 
-  res.redirect('/admin');
+  res.redirect('/admin/list');
 });
 
 router.get('/delete', async (req, res, next) => {
   var admin_id = req.query.admin_id;
   console.log('admin_id in delte ', admin_id);
-  res.redirect('/admin');
+  res.redirect('/admin/list');
 });
 
 module.exports = router;
