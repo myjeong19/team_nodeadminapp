@@ -1,132 +1,113 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
 
-router.get('/list', async (req, res) => {
-  var messages = [
-    {
-      channelNum: 1,
-      adminNum: 1,
-      nickName: '일돌이',
-      logging: 1,
-      chatId: 'one',
-      message: '밥먹자',
-      ipAddress: '111.111.111.111',
-      topNum: 1,
-      statusMessage: 1,
-      saveDate: Date.now(),
-      editDate: Date.now(),
-      deleteDate: Date.now(),
-    },
-    {
-      channelNum: 2,
-      adminNum: 2,
-      nickName: '이돌이',
-      logging: 2,
-      chatId: 'two',
-      message: '놀자',
-      ipAddress: '222.111.111.111',
-      topNum: 2,
-      statusMessage: 2,
-      saveDate: Date.now(),
-      editDate: Date.now(),
-      deleteDate: Date.now(),
-    },
-    {
-      channelNum: 3,
-      adminNum: 3,
-      nickName: '삼돌이',
-      logging: 3,
-      chatId: 'three',
-      message: '심심해',
-      ipAddress: '123.111.111.111',
-      topNum: 3,
-      statusMessage: 3,
-      saveDate: Date.now(),
-      editDate: Date.now(),
-      deleteDate: Date.now(),
-    },
-  ];
+/* GET home page. */
 
-  res.render('message/list', { messages });
+const messages = [
+  {
+    channel_id: 1,
+    member_id: 1,
+    nick_name: "hwoarang09",
+    msg_type_code: 111,
+    connection_id: "접속아디1",
+    message: "메세지1",
+    ip_address: "111.111.123.44",
+    top_channel_msg_id: 1111,
+    msg_state_code: 1,
+    msg_date: Date.now(),
+    edit_date: Date.now(),
+    del_date: Date.now(),
+  },
+  {
+    channel_id: 1,
+    member_id: 2,
+    nick_name: "ysw",
+    msg_type_code: 222,
+    connection_id: "접속아디2",
+    message: "메세지2",
+    ip_address: "111.222.222.44",
+    top_channel_msg_id: 2222,
+    msg_state_code: 0,
+    msg_date: Date.now(),
+    edit_date: Date.now(),
+    del_date: Date.now(),
+  },
+  {
+    channel_id: 2,
+    member_id: 1,
+    nick_name: "hwoarang09",
+    msg_type_code: 333,
+    connection_id: "접속아디3",
+    message: "메세지3",
+    ip_address: "111.333.123.44",
+    top_channel_msg_id: 3333,
+    msg_state_code: 1,
+    msg_date: Date.now(),
+    edit_date: Date.now(),
+    del_date: Date.now(),
+  },
+];
+
+router.get("/list", async (req, res, next) => {
+  var searchOption = {
+    nick_name: "닉네임",
+    email: "email@email.com",
+    channel_id: "채널id",
+  };
+  res.render("message/list", { messages, searchOption });
 });
 
-router.get('/create', async (req, res) => {
-  res.render('message/create');
-});
-
-router.post('/create', async (req, res) => {
-  var chatId = req.body.chatId;
-  var nickName = req.body.nickName;
-  var message = req.body.message;
-
-  var messageDB = {
-    channelNum: 0,
-    adminNum: 0,
-    nickName,
-    logging: 0,
-    chatId,
-    message,
-    ipAddress: '123.111.111.111',
-    topNum: 0,
-    statusMessage: 0,
-    saveDate: Date.now(),
-    editDate: Date.now(),
-    deleteDate: Date.now(),
+router.post("/list", async (req, res, next) => {
+  var searchOption = {
+    nick_name: req.body.nick_name,
+    email: req.body.email,
+    channel_id: req.body.channel_id,
   };
 
-  res.redirect('/message');
+  var ret = messages.filter((message) => {
+    if (searchOption.nick_name === message.nick_name) return message;
+  });
+  res.render("message/list", { messages: ret, searchOption });
 });
 
-router.get('/modify/:aid', async (req, res) => {
-  var channelNum = req.params.aid;
-
-  var messageDB = {
-    channelNum,
-    adminNum: 1,
-    nickName: '일돌이',
-    logging: 1,
-    chatId: 'one',
-    message: '밥먹자',
-    ipAddress: '111.111.111.111',
-    topNum: 1,
-    statusMessage: 1,
-    saveDate: Date.now(),
-    editDate: Date.now(),
-    deleteDate: Date.now(),
-  };
-
-  res.render('message/modify', { messageDB });
+router.get("/create", async (req, res, next) => {
+  res.render("message/create", { title: "message/create" });
 });
 
-router.post('/modify/:aid', async (req, res) => {
-  var channelNum = req.params.aid;
-
-  var chatId = req.body.chatId;
-  var nickName = req.body.nickName;
-  var message = req.body.message;
-
-  var messageDB = {
-    channelNum,
-    adminNum: 0,
-    nickName,
-    logging: 0,
-    chatId,
-    message,
-    ipAddress: '123.111.111.111',
-    topNum: 0,
-    statusMessage: 0,
-    saveDate: Date.now(),
-    editDate: Date.now(),
-    deleteDate: Date.now(),
-  };
-
-  res.redirect('/message');
+router.post("/create", async (req, res, next) => {
+  res.redirect("/message/list");
 });
 
-router.get('/delete', async (req, res) => {
-  var channelNum = req.query.idx;
+router.get("/modify/:top_channel_msg_id", async (req, res, next) => {
+  //선택한 게시글 고유번호를 파라메터 방식으로 URL을 통해 전달받음.
+  var top_channel_msg_id = req.params.top_channel_msg_id;
+  console.log("test modify get, top_channel_msg_id : ", top_channel_msg_id);
 
-  res.redirect('/message');
+  if (top_channel_msg_id === undefined) res.send("error");
+  else {
+    var message = messages.filter((message) => {
+      if (message.top_channel_msg_id === Number(top_channel_msg_id))
+        return message;
+    })[0];
+
+    console.log("modify message : ", JSON.stringify(message, null, 2));
+
+    res.render("message/modify", { message });
+  }
+});
+router.post("/modify/:top_channel_msg_id", function (req, res, next) {
+  var top_channel_msg_id = req.params.top_channel_msg_id;
+
+  var message = messages.filter((message) => {
+    if (message.top_channel_msg_id === Number(top_channel_msg_id))
+      return message;
+  })[0];
+  console.log("modify post article : ", JSON.stringify(message, null, 2));
+  res.redirect("/message/list");
+});
+
+router.get("/delete", async (req, res, next) => {
+  res.redirect("/message/list");
 });
 
 module.exports = router;
