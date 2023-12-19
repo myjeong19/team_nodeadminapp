@@ -11,13 +11,13 @@
 <!--우측 콘텐츠 헤더영역 -->
 <div class="row wrapper border-bottom white-bg page-heading">
   <div class="col-lg-10">
-    <h2>관리자정보관리</h2>
+    <h2>사용자 정보 등록</h2>
     <ol class="breadcrumb">
       <li>
-        <a href="/main">홈</a>
+        <a href="/main">홈 ></a>
       </li>
       <li>
-        <a>관리자정보관리</a>
+        <a>사용자정보등록 ></a>
       </li>
       <li class="active">
         <strong>조회</strong>
@@ -36,7 +36,7 @@
           <div class="form-group d-flex flex-column">
             <label class="control-label">프로필 사진</label>
             <img class="w-75" src="" alt="" />
-            <button class="w-75" submit="#">변경</button>
+            <button class="w-75" submit="#" name="profile_img_path">변경</button>
           </div>
         </div>
 
@@ -44,40 +44,36 @@
           <div class="form-group">
             <div>
               <label class="control-label">이메일</label>
-              <input type="text" class="form-control mb-3" />
+              <input type="email" name="email" class="form-control mb-3" />
             </div>
             <div class="form-group">
-              <label class="control-label col-6">이름</label>
-              <input type="text" class="form-control mb-3" />
+              <label class="control-label">이름</label>
+              <input type="text" name="name" class="form-control mb-3" />
             </div>
             <div class="form-group">
-              <label class="control-label">고유번호</label>
-              <input type="text" class="form-control" />
-            </div>
-            <div class="form-group">
-              <label class="control-label">전화번호</label>
-              <input type="text" class="form-control" />
+              <label class="control-label">비밀번호</label>
+              <input type="password" name="member_password" class="form-control mb-3" />
             </div>
             <div class="form-group">
               <label class="control-label">생년월일</label>
-              <input type="text" class="form-control" />
+              <input type="text" name="birth_date" class="form-control" />
             </div>
             <div class="form-group">
-              <label class="control-label">상태</label>
-              <input type="text" class="form-control" />
+              <label class="control-label">전화번호</label>
+              <input type="text" name="telephone" class="form-control" />
             </div>
             <div class="form-group">
-              <label class="control-label">생성일시</label>
-              <input type="text" class="form-control" />
+              <label class="control-label">가입유형</label>
+              <select name="entry_type_code" class="form-control" >
+                <option value="0">선택</option>
+                <option value="1">인스타</option>
+                <option value="2">유튜브</option>
+                <option value="3">블로그</option>
+              </select>
             </div>
             <div class="form-group">
-              <label class="control-label">수정일시</label>
-              <input type="text" class="form-control" />
-            </div>
-
-            <div class="form-group">
-              <label class="control-label">수정일시</label>
-              <input type="text" class="form-control" />
+              <label class="control-label">등록일시</label>
+              <input type="text" name="reg_date" class="form-control" value="2023-12-20" readonly/>
             </div>
           </div>
         </div>
