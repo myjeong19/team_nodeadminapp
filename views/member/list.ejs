@@ -1,52 +1,120 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>멤버 리스트</title>
-    <link rel="stylesheet" href="/stylesheets/style.css" />
-  </head>
-  <body>
-    <h1>멤버리스트 페이지</h1>
-    <a href="/member/create">신규 Member 등록</a>
-    <table>
-      <thead>
-        <tr>
-          <th>Member ID</th>
-          <th>이메일</th>
-          <th>비번</th>
-          <th>이름</th>
-          <th>이미지주소</th>
-          <th>전화번호</th>
-          <th>등록타입</th>
-          <th>상태코드</th>
-          <th>생일</th>
-          <th>등록날짜</th>
-          <th>regMemberID</th>
-          <th>수정날짜</th>
-          <th>editMemberID</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% for (var i=0; i < member_list.length; i++) {%>
-        <tr>
-          <% Object.keys(member_list[i]).forEach(function(key) { %>
-          <td>
-            <% if (key === 'email') {%>
-            <a href="/member/update?idx=<%=member_list[i][key]%>">
-              <%= member_list[i][key] %>
-            </a>
-            <% } else if (key === 'member_id') {%>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-            <a href="/member/modify/<%=member_list[i]['member_id']%>">
-              <%= member_list[i][key] %>
-            </a>
-            <% } else {%>
-            <p><%= member_list[i][key] %></p>
-            <% } %>
-          </td>
-          <% }); %>
-        </tr>
-        <% } %>
-      </tbody>
-    </table>
-  </body>
-</html>
+  <title>INSPINIA | Main view</title>
+
+  <link href="/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="/font-awesome/css/font-awesome.css" rel="stylesheet" />
+
+  <link href="/css/animate.css" rel="stylesheet" />
+  <link href="/css/style.css" rel="stylesheet" />
+
+  <!--추가 스타일-->
+</head>
+
+<!--우측 상단 헤더 영역 -->
+<div class="row wrapper border-bottom white-bg page-heading">
+  <div class="col-lg-10">
+    <h2>사용자 정보 관리</h2>
+    <ol class="breadcrumb">
+      <li>
+        <a href="/Home/Index">홈</a>
+      </li>
+      <li>
+        <a>사용자 정보 관리</a>
+      </li>
+      <li class="active">
+        <strong>조회</strong>
+      </li>
+    </ol>
+  </div>
+  <div class="col-lg-2"></div>
+</div>
+
+<!--우측 콘텐츠 영역 -->
+<div class="wrapper wrapper-content">
+  <div class="ibox-content m-b-sm border-bottom">
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label class="control-label" for="OrderNo">사용자 명</label>
+          <input type="text" class="form-control" />
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label class="control-label" for="OrderName">아이디</label>
+          <input type="text" class="form-control" />
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label class="control-label" for="MobileNo">사용여부</label>
+          <input type="text" class="form-control" />
+        </div>
+      </div>
+    </div>
+    <div class="text-center">
+      <button type="button" class="btn btn-primary">조회</button>
+      <a href="/member/create" class="btn btn-info">신규</a>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-content">
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th width="10%">이메일</th>
+                  <th width="5%">이름</th>
+                  <th width="10%">프로필 이미지</th>
+                  <th width="10%">전화번호</th>
+                  <th width="10%">생년월일</th>
+                  <th width="5%">가입 상태</th>
+                  <th width="10%">등록일시</th>
+                  <th width="10%">등록자 고유 번호</th>
+                  <th width="10%">수정일시</th>
+                  <th width="10%">수정자 고유 번호</th>
+                </tr>
+              </thead>
+              <tbody class="hoverTblBody">
+                <% for (let i = 0; i < userList.length; i ++) {%>
+                <tr>
+                  <td>
+                    <a href="/member/modify/<%= userList[i].reg_member_id %>"
+                      ><%= userList[i].email %></a
+                    >
+                  </td>
+                  <td><%= userList[i].name %></td>
+                  <td>
+                    <img
+                      class="w-25"
+                      src="<%= userList[i].profile_img_path %>"
+                      alt="profile_image"
+                    />
+                  </td>
+                  <td><%= userList[i].telephone %></td>
+                  <td><%= userList[i].birth_date %></td>
+                  <% if(userList[i].user_state_code == "1"){%>
+                  <td>가입</td>
+                  <% } else{ %>
+                  <td>탈퇴</td>
+                  <% }%>
+                  <td><%= userList[i].reg_date %></td>
+                  <td><%= userList[i].entry_type_code %></td>
+                  <td><%= userList[i].edit_date %></td>
+                  <td><%= userList[i].edit_member_id %></td>
+                </tr>
+                <% } %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

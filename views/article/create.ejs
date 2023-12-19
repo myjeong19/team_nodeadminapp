@@ -1,31 +1,92 @@
-<!DOCTYPE html>
-
-<html>
-
 <head>
-    <title>게시글 등록 페이지</title>
+  <link href="/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="/font-awesome/css/font-awesome.css" rel="stylesheet" />
+
+  <link href="/css/animate.css" rel="stylesheet" />
+  <link href="/css/style.css" rel="stylesheet" />
+
+  <!--추가 스타일-->
 </head>
 
-<body>
-    <style>
-        h1 {
-            font-size: calc(1.375rem + 1.5vw);
-            color: #008cba;
-        }
+<!--우측 콘텐츠 헤더영역 -->
+<div class="row wrapper border-bottom white-bg page-heading">
+  <div class="col-lg-10">
+    <h2>관리자정보관리</h2>
+    <ol class="breadcrumb">
+      <li>
+        <a href="/main">홈</a>
+      </li>
+      <li>
+        <a>관리자정보관리</a>
+      </li>
+      <li class="active">
+        <strong>조회</strong>
+      </li>
+    </ol>
+  </div>
+  <div class="col-lg-2"></div>
+</div>
 
-        button {
-            background-color: #008cba;
-            color: white;
-        }
-    </style>
-    <h1>신규 게시글 등록</h1>
-    <form action="/article/create" method="post">
-        제목:<input type="text" name="title"><br />
-        내용:<textarea name="contents" rows="20" cols="10" style="width:90%"></textarea><br />
-        등록자:<input type="text" name="register" /><br />
-        <input type="submit" value="저장" />
-        <button href="/channel/list">목록</button>
-    </form>
-</body>
+<!--우측 콘텐츠 영역 -->
+<form action="/member/create" method="post">
+  <div class="wrapper wrapper-content">
+    <div class="ibox-content m-b-sm border-bottom">
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group d-flex flex-column">
+            <label class="control-label">프로필 사진</label>
+            <img class="w-75" src="" alt="" />
+            <button class="w-75" submit="#">변경</button>
+          </div>
+        </div>
 
-</html>
+        <div class="col-sm-6">
+          <div class="form-group">
+            <div>
+              <label class="control-label">이메일</label>
+              <input type="text" class="form-control mb-3" />
+            </div>
+            <div class="form-group">
+              <label class="control-label col-6">이름</label>
+              <input type="text" class="form-control mb-3" />
+            </div>
+            <div class="form-group">
+              <label class="control-label">고유번호</label>
+              <input type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label class="control-label">전화번호</label>
+              <input type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label class="control-label">생년월일</label>
+              <input type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label class="control-label">상태</label>
+              <input type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label class="control-label">생성일시</label>
+              <input type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label class="control-label">수정일시</label>
+              <input type="text" class="form-control" />
+            </div>
+
+            <div class="form-group">
+              <label class="control-label">수정일시</label>
+              <input type="text" class="form-control" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary">저장</button>
+        <a href="/member/list" class="btn btn-info">목록</a>
+      </div>
+    </div>
+  </div>
+</form>
