@@ -6,7 +6,7 @@ const router = express.Router();
 -사용자 계정정보가 아닌 관리자 계정정보를 통한 로그인을 시도합니다
 -http://localhost:3001
 */
-router.get("/", async (req, res) => res.render("login"));
+router.get("/", async (req, res) => res.render("login", { layout: false }));
 
 /*
 -관리자 계정으로 로그인 성공 이후에 최초로 보여줄 관리자 웹사이트 메인페이지

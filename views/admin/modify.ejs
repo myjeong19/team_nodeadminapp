@@ -1,9 +1,4 @@
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>INSPINIA | Main view</title>
-
   <link href="/css/bootstrap.min.css" rel="stylesheet" />
   <link href="/font-awesome/css/font-awesome.css" rel="stylesheet" />
 
@@ -16,16 +11,13 @@
 <!--우측 콘텐츠 헤더영역 -->
 <div class="row wrapper border-bottom white-bg page-heading">
   <div class="col-lg-10">
-    <h2>회원가입</h2>
+    <h2>관리자정보관리</h2>
     <ol class="breadcrumb">
       <li>
         <a href="/main">홈</a>
-      </li>
+      </li> >
       <li>
-        <a>회원가입</a>
-      </li>
-      <li class="active">
-        <strong>조회</strong>
+        <a>관리자 정보수정</a>
       </li>
     </ol>
   </div>
@@ -34,91 +26,64 @@
 
 <!--우측 콘텐츠 영역 -->
 <div class="wrapper wrapper-content">
-  <div class="ibox-content m-b-sm border-bottom">
-    <div class="row">
-      <div class="col-sm-4">
-        <div class="form-group">
-          <label class="control-label">어드민 고유번호</label>
-          <input type="text" class="form-control" />
-        </div>
-      </div>
-      <div class="col-sm-4">
-        <div class="form-group">
-          <label class="control-label">암호</label>
-          <input type="text" class="form-control" />
-        </div>
-      </div>
+  <form action="/admin/list" id="adminForm" method="post">
+      <div class="ibox-content m-b-sm border-bottom">
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="form-group d-flex flex-column">
+              <label class="control-label">프로필 사진</label>
+              <img class="w-75" src="" alt="" />
+              <button class="w-75" submit="/">변경</button>
+            </div>
+          </div>
 
-      <div class="col-sm-4">
-        <div class="form-group">
-          <label class="control-label">성명</label>
-          <input type="text" class="form-control" />
+          <div class="col-sm-6">
+            <div class="form-group">
+              <div>
+                <label class="control-label">소속회사코드</label>
+                <input type="text" name="company_code" id="company_code" class="form-control mb-3" />
+              </div>
+              <div class="form-group">
+                <label class="control-label col-6">ID</label>
+                <input type="text" name="admin_id" id="admin_id" class="form-control mb-3" />
+              </div>
+              <div class="form-group">
+                <label class="control-label">이름</label>
+                <input type="text" name="admin_name" id="admin_name" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label class="control-label">비밀번호</label>
+                <input type="password" name="admin_password" id="admin_password" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label class="control-label">email</label>
+                <input type="text" name="email" id="email" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label class="control-label">전화번호</label>
+                <input type="text" name="telephone" id="telephone" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label class="control-label">소속부서</label>
+                <input type="text" name="dept_name" id="dept_name" class="form-control" />
+              </div>
+              <!-- <div class="form-group">
+              <label class="control-label">생성일시</label>
+              <input type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label class="control-label">수정일시</label>
+              <input type="text" class="form-control" />
+            </div> -->
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-12">
-        <div class="form-group">
-          <label class="control-label">홈페이지주소</label>
-          <input type="text" class="form-control" />
-        </div>
-      </div>
-    </div>
 
-    <div class="row">
-      <div class="col-sm-12">
-        <div class="form-group">
-          <label class="control-label">간략소개</label>
-          <textarea class="form-control" rows="10" cols="5"></textarea>
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary">저장</button>
+          <a href="/admin/delete" class="btn btn-info">삭제</a>
+          <a href="/admin/list" class="btn btn-info">목록</a>
         </div>
       </div>
-    </div>
-
-    <div class="row">
-      <div class="col-sm-4">
-        <div class="form-group">
-          <label class="control-label">메일주소</label>
-          <input type="text" class="form-control" />
-        </div>
-      </div>
-      <div class="col-sm-4">
-        <div class="form-group">
-          <label class="control-label">회사명</label>
-          <input type="text" class="form-control" />
-        </div>
-      </div>
-
-      <div class="col-sm-4">
-        <div class="form-group">
-          <label class="control-label">직위</label>
-          <input type="text" class="form-control" />
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-sm-4">
-        <div class="form-group">
-          <label class="control-label">수정자</label>
-        </div>
-      </div>
-      <div class="col-sm-4">
-        <div class="form-group">
-          <label class="control-label">수정일시</label>
-        </div>
-      </div>
-
-      <div class="col-sm-4">
-        <div class="form-group">
-          <label class="control-label">사용여부</label>
-          <div class="form-group"></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="text-center">
-      <button type="submit" class="btn btn-primary">저장</button>
-      <a href="/list" class="btn btn-info">목록</a>
-    </div>
-  </div>
+  </form>
 </div>
