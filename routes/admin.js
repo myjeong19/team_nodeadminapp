@@ -1,13 +1,11 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
 
-router.get;
-
-router.get('/list', async (req, res, next) => {
-  var admin_members = [
+router.get('/list', async (req, res) => {
+  var admin_member = [
     {
+      admin_member_id: 1,
       company_code: 1,
       admin_id: 'ysungwon_admin1',
       admin_password: 'ysungwon_password1',
@@ -22,6 +20,7 @@ router.get('/list', async (req, res, next) => {
       reg_date: Date.now(),
     },
     {
+      admin_member_id: 2,
       company_code: 1,
       admin_id: 'ysungwon_admin2',
       admin_password: 'ysungwon_password2',
@@ -36,6 +35,7 @@ router.get('/list', async (req, res, next) => {
       reg_date: Date.now(),
     },
     {
+      admin_member_id: 3,
       company_code: 1,
       admin_id: 'ysungwon_admin3',
       admin_password: 'ysungwon_password3',
@@ -51,14 +51,15 @@ router.get('/list', async (req, res, next) => {
     },
   ];
 
-  res.render('admin/list', { admin_members });
+  res.render('admin/list', { admin_member });
 });
 
-router.get('/create', async (req, res, next) => {
-  res.render('admin/create', { title: 'admin/create' });
+router.get('/create', async (req, res) => {
+  res.render('admin/create');
 });
 
-router.post('/create', async (req, res, next) => {
+router.post('/create', async (req, res) => {
+
   var company_code = req.body.company_code;
   var admin_id = req.body.admin_id;
   var admin_password = req.body.admin_password;
@@ -67,8 +68,6 @@ router.post('/create', async (req, res, next) => {
   var telephone = req.body.telephone;
   var dept_name = req.body.dept_name;
   var used_yn_code = req.body.used_yn_code;
-  var reg_user_id = req.body.reg_user_id;
-  var edit_user_id = req.body.edit_user_id;
 
   var admin = {
     company_code,
@@ -79,14 +78,29 @@ router.post('/create', async (req, res, next) => {
     telephone,
     dept_name,
     used_yn_code,
-    reg_user_id,
-    edit_user_id,
+    reg_user_id:"",
+    edit_user_id:"",
     edit_date: Date.now(),
     reg_date: Date.now(),
   };
 
-  console.log('admin : ', admin);
-  res.redirect('/admin/list');
+  //등록한 데이터
+  var savedAdmin = {
+    company_code:1,
+    admin_id:2,
+    admin_password:"1234",
+    admin_name:"newadmin",
+    email:"root@gmail.com",
+    telephone:"010-1111-1111",
+    dept_name:"IT부서",
+    used_yn_code:"1",
+    reg_user_id:"oldAdmin",
+    edit_user_id:"oldAdmin",
+    edit_date: Date.now(),
+    reg_date: Date.now(),
+  };
+
+  res.redirect('/admin/list', {savedAdmin});
 });
 
 router.get('/modify/:admin_id', async (req, res, next) => {
@@ -112,15 +126,13 @@ router.get('/modify/:admin_id', async (req, res, next) => {
 
 router.post('/modify/:admin_id', async (req, res, next) => {
   var company_code = req.body.company_code;
-  var admin_id = req.params.admin_id;
+  var admin_id = req.body.admin_id;
   var admin_password = req.body.admin_password;
   var admin_name = req.body.admin_name;
   var email = req.body.email;
   var telephone = req.body.telephone;
   var dept_name = req.body.dept_name;
   var used_yn_code = req.body.used_yn_code;
-  var reg_user_id = req.body.reg_user_id;
-  var edit_user_id = req.body.edit_user_id;
 
   var admin = {
     company_code,
@@ -131,21 +143,34 @@ router.post('/modify/:admin_id', async (req, res, next) => {
     telephone,
     dept_name,
     used_yn_code,
-    reg_user_id,
-    edit_user_id,
+    reg_user_id:"",
+    edit_user_id:"",
     edit_date: Date.now(),
     reg_date: Date.now(),
   };
 
-  console.log('admin modify: ', admin);
+  //등록한 데이터
+  var savedAdmin = {
+    company_code:1,
+    admin_id:2,
+    admin_password:"1234",
+    admin_name:"newadmin",
+    email:"root@gmail.com",
+    telephone:"010-1111-1111",
+    dept_name:"IT부서",
+    used_yn_code:"1",
+    reg_user_id:"oldAdmin",
+    edit_user_id:"oldAdmin",
+    edit_date: Date.now(),
+    reg_date: Date.now(),
+  };
 
-  res.redirect('/admin/list');
+  res.json(savedAdmin);
 });
 
 router.get('/delete', async (req, res, next) => {
   var admin_id = req.query.admin_id;
-  console.log('admin_id in delte ', admin_id);
-  res.redirect('/admin/list');
+  res.render('admin/delete', {admin_id});
 });
 
 module.exports = router;

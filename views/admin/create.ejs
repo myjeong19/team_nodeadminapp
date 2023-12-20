@@ -15,12 +15,9 @@
     <ol class="breadcrumb">
       <li>
         <a href="/main">홈</a>
-      </li>
+      </li> >
       <li>
-        <a>관리자정보관리</a>
-      </li>
-      <li class="active">
-        <strong>조회</strong>
+        <a>신규관리자 생성</a>
       </li>
     </ol>
   </div>
@@ -28,7 +25,7 @@
 </div>
 
 <!--우측 콘텐츠 영역 -->
-<form action="/member/create" method="post">
+<form action="/admin/list" id="adminForm" method="post">
   <div class="wrapper wrapper-content">
     <div class="ibox-content m-b-sm border-bottom">
       <div class="row">
@@ -36,57 +33,99 @@
           <div class="form-group d-flex flex-column">
             <label class="control-label">프로필 사진</label>
             <img class="w-75" src="" alt="" />
-            <button class="w-75" submit="#">변경</button>
+            <button class="w-75" submit="/">변경</button>
           </div>
         </div>
 
         <div class="col-sm-6">
           <div class="form-group">
             <div>
-              <label class="control-label">이메일</label>
-              <input type="text" class="form-control mb-3" />
+              <label class="control-label">소속회사코드</label>
+              <input type="text" id="company_code" class="form-control mb-3" />
             </div>
             <div class="form-group">
-              <label class="control-label col-6">이름</label>
-              <input type="text" class="form-control mb-3" />
+              <label class="control-label col-6">ID</label>
+              <input type="text" id="admin_id" class="form-control mb-3" />
             </div>
             <div class="form-group">
-              <label class="control-label">고유번호</label>
-              <input type="text" class="form-control" />
+              <label class="control-label">이름</label>
+              <input type="text" id="admin_name" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label class="control-label">비밀번호</label>
+              <input type="password" id="admin_password" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label class="control-label">email</label>
+              <input type="text" id="email" class="form-control" />
             </div>
             <div class="form-group">
               <label class="control-label">전화번호</label>
-              <input type="text" class="form-control" />
+              <input type="text" id="telephone" class="form-control" />
             </div>
             <div class="form-group">
-              <label class="control-label">생년월일</label>
-              <input type="text" class="form-control" />
+              <label class="control-label">소속부서</label>
+              <input type="text" id="dept_name" class="form-control" />
             </div>
-            <div class="form-group">
-              <label class="control-label">상태</label>
-              <input type="text" class="form-control" />
-            </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
               <label class="control-label">생성일시</label>
               <input type="text" class="form-control" />
             </div>
             <div class="form-group">
               <label class="control-label">수정일시</label>
               <input type="text" class="form-control" />
-            </div>
-
-            <div class="form-group">
-              <label class="control-label">수정일시</label>
-              <input type="text" class="form-control" />
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
 
       <div class="text-center">
         <button type="submit" class="btn btn-primary">저장</button>
-        <a href="/member/list" class="btn btn-info">목록</a>
+        <a href="/admin/list" class="btn btn-info">목록</a>
       </div>
     </div>
   </div>
 </form>
+
+<script>
+  //유효성검사
+  $("#adminForm").submit(function () {
+      if ($("#company_code").val() == "") {
+          alert("소속 회사를 입력해주세요");
+          $("#company_code").focus();
+          return false;
+      }
+
+      if ($("#admin_id").val() == "") {
+          alert("ID를 입력해주세요.");
+          $("#admin_id").focus();
+          return false;
+      }
+
+      if ($("#admin_name").val() == "9") {
+          alert("이름을 입력해주세요.");
+          $("#admin_name").focus();
+          return false;
+      }
+
+      if ($("#admin_password").val() == "0") {
+          alert("비밀번호를 입력해주세요.");
+          $("#admin_password").focus();
+          return false;
+      }
+
+      if ($("#email").val() == "") {
+          alert("email을 입력해주세요.");
+          $("#email").focus();
+          return false;
+      }
+
+      if ($("#telephone").val() == "") {
+          alert("전화번호를 입력해주세요.");
+          $("#telephone").focus();
+          return false;
+      }
+
+      return true;
+  });
+</script>
