@@ -117,7 +117,7 @@ router.post('/modify/:id', async (req, res) => {
     telephone,
     reg_user_id,
     reg_date,
-    edit_user,
+    edit_user_id,
     edit_date,
     action,
   } = req.body;
@@ -132,7 +132,7 @@ router.post('/modify/:id', async (req, res) => {
       telephone,
       reg_user_id,
       reg_date,
-      edit_user,
+      edit_user_id,
       edit_date,
     };
 

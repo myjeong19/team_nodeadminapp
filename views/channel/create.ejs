@@ -15,7 +15,8 @@
     <ol class="breadcrumb">
       <li>
         <a href="/main">홈</a>
-      </li> >
+      </li>
+      >
       <li>
         <a>채팅방 생성</a>
       </li>
@@ -25,39 +26,38 @@
 </div>
 
 <!--우측 콘텐츠 영역 -->
-<div class="wrapper wrapper-content">
+<form class="wrapper wrapper-content" action="/channel/create" method="post">
   <div class="ibox-content m-b-sm border-bottom">
     <div class="row">
       <div class="col-sm-4">
         <div class="form-group d-flex flex-column">
-          <label class="control-label">대표이미지</label>
-          <img class="w-75" src="" alt="" />
-          <button class="w-75" submit="/">변경</button>
+          <label class="control-label">대표 이미지 URL</label>
+          <input type="text" class="form-control" name="channel_img_path" />
         </div>
       </div>
       <div class="col-sm-4">
         <div class="form-group">
-          <label class="control-label">채팅방ID</label>
-          <input type="text" class="form-control" />
+          <label class="control-label">커뮤니티 고유번호</label>
+          <input type="text" class="form-control" name="comunity_id" />
         </div>
       </div>
       <div class="col-sm-4">
         <div class="form-group">
-          <label class="control-label">커뮤니티ID</label>
-          <input type="text" class="form-control" />
+          <label class="control-label">카테고리 코드</label>
+          <input type="text" class="form-control" name="category_code" />
         </div>
       </div>
       <div class="col-sm-4">
         <div class="form-group">
-          <label class="control-label">카테고리</label>
-          <input type="text" class="form-control" />
+          <label class="control-label">동시 채널 접속자 수</label>
+          <input type="number" class="form-control" name="user_limit" />
         </div>
       </div>
 
-      <div class="col-sm-4">
+      <div class="col-sm-8">
         <div class="form-group">
           <label class="control-label">채널명</label>
-          <input type="text" class="form-control" />
+          <input type="text" class="form-control" name="channel_name" />
         </div>
       </div>
     </div>
@@ -65,17 +65,13 @@
     <div class="row">
       <div class="col-sm-12">
         <div class="form-group">
-          <label class="control-label">동시채널접속자수</label>
-          <input type="text" class="form-control" />
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-sm-12">
-        <div class="form-group">
-          <label class="control-label">간략소개</label>
-          <textarea class="form-control" rows="10" cols="5"></textarea>
+          <label class="control-label">채널 간략 소개</label>
+          <textarea
+            class="form-control"
+            rows="10"
+            cols="5"
+            name="channel_desc"
+          ></textarea>
         </div>
       </div>
     </div>
@@ -83,17 +79,34 @@
     <div class="row">
       <div class="col-sm-4">
         <div class="form-group">
-          <label class="control-label">상태</label>
-          <input type="text" class="form-control" />
+          <label class="control-label">채널 오픈 상태 코드</label>
+          <input type="number" class="form-control" name="channel_state_code" />
         </div>
       </div>
 
-      <div class="text-center">
-        <button type="submit" class="btn btn-primary">저장</button>
-        <a href="/channel/list" class="btn btn-info">목록</a>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label class="control-label">등록일시</label>
+          <input
+            type="date"
+            class="form-control"
+            name="reg_date"
+            value="<%=today%>"
+          />
+        </div>
       </div>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label class="control-label">등록자 고유 번호</label>
+          <input type="text" class="form-control" name="reg_member_id" />
+        </div>
+      </div>
+    </div>
+    <div class="text-center">
+      <button type="submit" class="btn btn-primary">저장</button>
+      <a href="/channel/list" class="btn btn-info">목록</a>
     </div>
   </div>
 
-
   <script></script>
+</form>
