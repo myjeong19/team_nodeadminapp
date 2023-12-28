@@ -11,13 +11,14 @@
 <!--우측 콘텐츠 헤더영역 -->
 <div class="row wrapper border-bottom white-bg page-heading">
   <div class="col-lg-10">
-    <h2>채팅방 정보 수정</h2>
+    <h2>채팅방 생성</h2>
     <ol class="breadcrumb">
       <li>
         <a href="/main">홈</a>
-      </li> >
+      </li>
+      >
       <li>
-        <a>채팅방 정보 수정</a>
+        <a>채팅방 생성</a>
       </li>
     </ol>
   </div>
@@ -25,80 +26,104 @@
 </div>
 
 <!--우측 콘텐츠 영역 -->
-<div class="wrapper wrapper-content">
-  <form action="/channel/modify/<%=channel.channel_id%>" id="adminForm" method="post">
-    <div class="ibox-content m-b-sm border-bottom">
-      <div class="row">
-        <div class="col-sm-4">
-          <div class="form-group d-flex flex-column">
-            <label class="control-label">대표이미지</label>
-            <img class="w-75" src="" alt="" />
-            <button class="w-75" submit="/">변경</button>
-          </div>
+<form class="wrapper wrapper-content" action="/channel/create" method="post">
+  <div class="ibox-content m-b-sm border-bottom">
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="form-group d-flex flex-column">
+          <label class="control-label">대표 이미지 URL</label>
+          <input type="text" class="form-control" name="channel_img_path" />
         </div>
-        <div class="col-sm-4">
-          <div class="form-group">
-            <label class="control-label">채팅방ID</label>
-            <input type="text" name="channel_id" id="channel_id" value="<%=channel.channel_id %>" class="form-control" />
-          </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label class="control-label">커뮤니티 고유번호</label>
+          <input type="text" class="form-control" name="comunity_id" />
         </div>
-        <div class="col-sm-4">
-          <div class="form-group">
-            <label class="control-label">커뮤니티ID</label>
-            <input type="text" name="community_id" id="community_id" value="<%=channel.community_id %>" class="form-control" />
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="form-group">
-            <label class="control-label">카테고리</label>
-            <input type="text" name="category_code" id="category_code" value="<%=channel.category_code %>" class="form-control" />
-          </div>
-        </div>
-
-        <div class="col-sm-4">
-          <div class="form-group">
-            <label class="control-label">채널명</label>
-            <input type="text" name="channel_name" id="channel_name" value="<%=channel.channel_name %>" class="form-control" />
-          </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label class="control-label">카테고리 코드</label>
+          <input type="text" class="form-control" name="category_code" />
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="form-group">
-            <label class="control-label">최대동시채널접속자수</label>
-            <input type="text" name="user_limit" id="user_limit" value="<%=channel.user_limit %>" class="form-control" />
-          </div>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <label class="control-label">채널명</label>
+          <input type="text" class="form-control" name="channel_name" />
         </div>
       </div>
-
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="form-group">
-            <label class="control-label">간략소개</label>
-            <textarea class="form-control" rows="10" cols="5" name="channel_desc" id="channel_desc"><%=channel.channel_desc%></textarea>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-sm-4">
-          <div class="form-group">
-            <label class="control-label">상태</label>
-            <select name="channel_state_code" id="channel_state_code" value="<%=channel.channel_id %>" class="form-control">
-              <option value="0" <% if( channel.channel_state_code===0) { %> selected <% } %>>비활성화</option>
-              <option value="1" <% if( channel.channel_state_code===1) { %> selected <% } %>>사용중</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="text-center">
-          <button type="submit" class="btn btn-primary">저장</button>
-          <a href="/channel/delete" class="btn btn-danger">삭제</a>
-          <a href="/channel/list" class="btn btn-info">목록</a>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label class="control-label">동시 채널 접속자 수</label>
+          <input type="number" class="form-control" name="user_limit" />
         </div>
       </div>
     </div>
-  </form>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group">
+          <label class="control-label">채널 간략 소개</label>
+          <textarea
+            class="form-control"
+            rows="10"
+            cols="5"
+            name="channel_desc"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label class="control-label">채널 오픈 상태 코드</label>
+          <input
+            type="number"
+            class="form-control"
+            name="channel_state_code"
+            value="<%=channel.channel_state_code%>"
+          />
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label class="control-label">등록일시</label>
+          <input type="date" class="form-control" name="reg_date" />
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label class="control-label">등록자 고유 번호</label>
+          <input type="text" class="form-control" name="reg_member_id" />
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label class="control-label">수정자 고유 번호</label>
+          <input type="number" class="form-control" name="edit_member_id" />
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label class="control-label">수정일시</label>
+          <input type="date" class="form-control" name="edit_date" />
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center">
+      <button type="submit" class="btn btn-primary">저장</button>
+      <a href="/channel/list" class="btn btn-info">목록</a>
+    </div>
+  </div>
 
   <script></script>
+</form>
