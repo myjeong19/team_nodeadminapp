@@ -73,7 +73,7 @@ module.exports = function (sequelize, DataTypes) {
       sequelize,
       tableName: 'channel',
       timestamps: false,
-      comment: '관리자 정보',
+      comment: '채널 정보',
       indexes: [
         {
           name: 'PRIMARY',
