@@ -16,13 +16,13 @@
 <!--우측 상단 헤더 영역 -->
 <div class="row wrapper border-bottom white-bg page-heading">
   <div class="col-lg-10">
-    <h2>사용자 정보 관리</h2>
+    <h2>채널 정보 관리</h2>
     <ol class="breadcrumb">
       <li>
-        <a href="/Home/Index">홈</a>
+        <a href="/Home/Index">Home</a>
       </li>
       <li>
-        <a>사용자 정보 관리</a>
+        <a>채널 정보 관리</a>
       </li>
       <li class="active">
         <strong>조회</strong>
@@ -57,7 +57,7 @@
     </div>
     <div class="text-center">
       <button type="button" class="btn btn-primary">조회</button>
-      <a href="/member/create" class="btn btn-info">신규</a>
+      <a href="/channel/create" class="btn btn-info">신규</a>
     </div>
   </div>
 
@@ -69,35 +69,50 @@
             <table class="table table-hover">
               <thead>
                 <tr>
-                  <th width="10%">이메일</th>
-                  <th width="5%">이름</th>
-                  <th width="10%">프로필 이미지</th>
-                  <th width="10%">전화번호</th>
-                  <th width="10%">생년월일</th>
-                  <th width="5%">가입 상태</th>
+                  <th width="10%">채널ID</th>
+                  <th width="20%">이름</th>
+                  <th width="10%">카테고리</th>
+                  <th width="20%">소개글</th>
+                  <th width="10%">유저수</th>
+                  <th width="10%">상태</th>
+                  <th width="10%">방장</th>
                   <th width="10%">등록일시</th>
-                  <th width="10%">등록자 고유 번호</th>
-                  <th width="10%">수정일시</th>
-                  <th width="10%">수정자 고유 번호</th>
                 </tr>
               </thead>
               <tbody class="hoverTblBody">
-                <tr>
-                  <td>
-                    <a href=""></a>
-                  </td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-
-                  <td>가입</td>
-
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
+                <% for(var i=0;i<channel_list.length;i++){ %>
+                  <tr>
+                    <td><a href="/channel/modify/<%=channel_list[i].channel_id%>">
+                      <%=channel_list[i].channel_id%>
+                    </a></td>
+                    <td><a href="/channel/modify/<%=channel_list[i].channel_id%>">
+                      <%=channel_list[i].channel_name%>
+                    </a>
+                    </td>
+                    <td>
+                      <%=channel_list[i].category_code%>
+                    </td>
+                    <td>
+                      <%=channel_list[i].channel_desc%>
+                    </td>
+                    <td>
+                      <%=channel_list[i].user_limit%>
+                    </td>
+                    <td>
+                      <% if(channel_list[i].channel_state_code==1){%>
+                        채팅중
+                        <% } else{ %>
+                          비활성화
+                          <% }%>
+                    </td>
+                    <td>
+                      <%=channel_list[i].reg_member_id%>
+                    </td>
+                    <td>
+                      <%=channel_list[i].reg_date%>
+                    </td>
+                  </tr>
+                  <% } %>
               </tbody>
             </table>
           </div>

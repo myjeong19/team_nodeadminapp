@@ -98,7 +98,7 @@ router.post("/create", async (req, res) => {
     reg_date: Date.now(),
   };
 
-  res.redirect("/admin/list"), { savedAdmin };
+  res.redirect("/admin/list", { savedAdmin });
 });
 
 router.get("/modify/:admin_id", async (req, res, next) => {
