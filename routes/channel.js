@@ -3,66 +3,50 @@
 var express = require('express');
 var router = express.Router();
 
-// var channel = {
-//   channel_id,
-//   community_id,
-//   category_code,
-//   channel_name,
-//   user_limit,
-//   channel_img_path,
-//   channel_desc,
-//   channel_state_code,
-//   reg_date,
-//   reg_member_id,
-//   edit_date,
-//   edit_member_id
-// }
-
-//localhost:3001/channel
 router.get('/list', async (req, res) => {
   var channel_list = [
     {
       channel_id: 1,
       community_id: 1,
       category_code: 1,
-      channel_name: "채팅채널1",
+      channel_name: '채팅채널1',
       user_limit: 100,
-      channel_img_path: "",
-      channel_desc: "",
+      channel_img_path: '',
+      channel_desc: '',
       channel_state_code: 1,
       reg_date: Date.now(),
-      reg_member_id: "yujin___",
+      reg_member_id: 'yujin___',
       edit_date: Date.now(),
-      edit_member_id: "yujin___"
+      edit_member_id: 'yujin___',
     },
     {
       channel_id: 2,
       community_id: 10,
       category_code: 1,
-      channel_name: "채팅채널2",
+      channel_name: '채팅채널2',
       user_limit: 100,
-      channel_img_path: "",
-      channel_desc: "",
+      channel_img_path: '',
+      channel_desc: '',
       channel_state_code: 1,
       reg_date: Date.now(),
-      reg_member_id: "yujin1___",
+      reg_member_id: 'yujin1___',
       edit_date: Date.now(),
-      edit_member_id: "yujin1___"
+      edit_member_id: 'yujin1___',
     },
     {
       channel_id: 3,
       community_id: 1,
       category_code: 2,
-      channel_name: "채팅채널1",
+      channel_name: '채팅채널1',
       user_limit: 100,
-      channel_img_path: "",
-      channel_desc: "",
+      channel_img_path: '',
+      channel_desc: '',
       channel_state_code: 0,
       reg_date: Date.now(),
-      reg_member_id: "yujin2___",
+      reg_member_id: 'yujin2___',
       edit_date: Date.now(),
-      edit_member_id: "yujin2___"
-    }
+      edit_member_id: 'yujin2___',
+    },
   ];
   res.render('channel/list', { channel_list });
 });
@@ -74,7 +58,6 @@ router.get('/create', async (req, res) => {
 
 //localhost:3001/channel/create
 router.post('/create', async (req, res) => {
-
   var channel_id = req.body.channel_id;
   var community_id = req.body.community_id;
   var category_code = req.body.category_code;
@@ -104,15 +87,15 @@ router.post('/create', async (req, res) => {
     channel_id: 1,
     community_id: 1,
     category_code: 1,
-    channel_name: "채팅채널1",
+    channel_name: '채팅채널1',
     user_limit: 100,
-    channel_img_path: "",
-    channel_desc: "",
+    channel_img_path: '',
+    channel_desc: '',
     channel_state_code: 1,
     reg_date: Date.now(),
-    reg_member_id: "yujin___",
+    reg_member_id: 'yujin___',
     edit_date: Date.now(),
-    edit_member_id: "yujin___"
+    edit_member_id: 'yujin___',
   };
 
   res.redirect('/channel/list');
@@ -125,18 +108,18 @@ router.get('/modify/:cid', async (req, res) => {
     channel_id: 1,
     community_id: 1,
     category_code: 1,
-    channel_name: "채팅채널1",
+    channel_name: '채팅채널1',
     user_limit: 100,
-    channel_img_path: "",
-    channel_desc: "",
+    channel_img_path: '',
+    channel_desc: '',
     channel_state_code: 1,
     reg_date: Date.now(),
-    reg_member_id: "yujin___",
+    reg_member_id: 'yujin___',
     edit_date: Date.now(),
-    edit_member_id: "yujin___"
+    edit_member_id: 'yujin___',
   };
 
-  res.render('channel/modify', {channel});
+  res.render('channel/modify', { channel });
 });
 
 //localhost:3001/channel/modify
@@ -170,15 +153,15 @@ router.post('/modify/:cid', async (req, res) => {
     channel_id: 1,
     community_id: 1,
     category_code: 1,
-    channel_name: "채팅채널1",
+    channel_name: '채팅채널1',
     user_limit: 100,
-    channel_img_path: "",
-    channel_desc: "채팅채널1입니다",
+    channel_img_path: '',
+    channel_desc: '채팅채널1입니다',
     channel_state_code: 1,
     reg_date: Date.now(),
-    reg_member_id: "yujin___",
+    reg_member_id: 'yujin___',
     edit_date: Date.now(),
-    edit_member_id: "yujin___"
+    edit_member_id: 'yujin___',
   };
 
   res.redirect('/channel/list');
