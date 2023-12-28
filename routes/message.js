@@ -51,9 +51,9 @@ var Op = db.Sequelize.Op;
 
 router.get("/list", async (req, res, next) => {
   var searchOption = {
-    nick_name: "닉네임",
-    msg_type_code: "메세지유형",
-    channel_id: "채널id",
+    nick_name: "",
+    msg_state_code: "",
+    channel_id: "",
   };
 
   var messages = await db.Messages.findAll({
@@ -81,16 +81,29 @@ router.get("/list", async (req, res, next) => {
 router.post("/list", async (req, res, next) => {
   var searchOption = {
     nick_name: req.body.nick_name,
-    msg_type_code: req.body.msg_type_code,
-    channel_id: req.body.channel_id,
+    msg_state_code: Number(req.body.msg_state_code),
+    channel_id: req.body.channel_id && Number(req.body.channel_id),
   };
 
   var messages = await db.Messages.findAll({
-    where: { channel_id: searchOption.channel_id },
+    where: {
+      [Op.and]: [
+        // 다른 조건을 추가할 때 빈 문자열이 아닌 경우에만 추가
+        searchOption.channel_id !== "" && {
+          channel_id: searchOption.channel_id,
+        },
+        searchOption.nick_name !== "" && { nick_name: searchOption.nick_name },
+        searchOption.msg_state_code !== 9 &&
+          searchOption.msg_state_code !== "" && {
+            msg_state_code: searchOption.msg_state_code,
+          },
+      ],
+    },
   });
   messages = messages.map((arr) => {
     return arr.dataValues;
   });
+  console.log("searchOption : ", searchOption);
   res.render("message/list", { messages, searchOption });
 });
 
