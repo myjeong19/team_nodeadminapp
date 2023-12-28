@@ -68,8 +68,8 @@ router.post('/create', async (req, res) => {
     channel_desc,
     reg_date,
     reg_member_id,
-    edit_date,
-    edit_member_id,
+    edit_date: null,
+    edit_member_id: null,
   };
 
   await db.Channel.create(newChannel);
@@ -82,7 +82,7 @@ router.get('/modify/:id', async (req, res) => {
   const channelIndex = req.params.id;
 
   const channel = await db.Channel.findOne({
-    where: { comunity_id: channelIndex },
+    where: { channel_id: channelIndex },
   });
 
   res.render('channel/modify', { channel });
