@@ -9,7 +9,7 @@
 
   <link href="/css/animate.css" rel="stylesheet" />
   <link href="/css/style.css" rel="stylesheet" />
-
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <!--추가 스타일-->
 </head>
 
@@ -36,41 +36,50 @@
 <div class="wrapper wrapper-content">
   <form action="/message/list" method="post" id="searchForm">
     <div class="ibox-content m-b-sm border-bottom">
+      <!-- 채널id-->
       <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label class="control-label" for="OrderName">채널id</label>
+            <input
+              type="channel_id"
+              value="<%=searchOption.channel_id%>"
+              name="channel_id"
+              id="channel_id"
+              class="form-control"
+            />
+          </div>
+        </div>
+        <!-- nickname id-->
         <div class="col-md-4">
           <div class="form-group">
             <label class="control-label" for="OrderName">닉네임</label>
             <input
               type="text"
-              name="nick_name"
               value="<%=searchOption.nick_name%>"
+              name="nick_name"
+              id="nick_name"
               class="form-control"
             />
           </div>
         </div>
+        <!-- member id-->
         <div class="col-md-4">
           <div class="form-group">
-            <label class="control-label" for="OrderName">이메일</label>
-            <input
-              type="email"
-              name="email"
-              value="<%=searchOption.email%>"
-              class="form-control"
-            />
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="form-group">
-            <label class="control-label" for="OrderName">채널id</label>
-            <input
-              type="text"
-              name="channel_id"
-              value="<%=searchOption.channel_id%>"
-              class="form-control"
-            />
+            <label class="control-label">메세지 상태</label>
+            <select
+              name="msg_state_code"
+              id="msg_state_code"
+              class="form-control">
+
+              <option value="9" <% if( searchOption.msg_state_code === 9) { %> selected <% } %>>전체</option>
+              <option value="0" <% if( searchOption.msg_state_code === 0) { %> selected <% } %>>숨김</option>
+              <option value="1" <% if( searchOption.msg_state_code === 1) { %> selected <% } %>>공개</option>
+            </select>
           </div>
         </div>
       </div>
+
       <div class="text-center">
         <input type="submit" class="btn btn-primary" value="조회" />
         <a href="/message/create" class="btn btn-info">신규</a>
@@ -86,13 +95,14 @@
             <table class="table table-hover">
               <thead>
                 <tr>
-                  <th width="10%">채널ID</th>
+                  <th width="10%">메세지id</th>
+                  <th width="10%">채널id</th>
                   <th width="10%">닉네임</th>
-                  <th width="20%">접속id</th>
-                  <th width="20%">메세지</th>
-                  <th width="10%">접속ip</th>
+                  <th width="10%">메세지타입</th>
+                  <th width="10%">메세지</th>
+                  <th width="20%">IP주소</th>
                   <th width="10%">메세지상태</th>
-                  <th width="20%">등록날짜</th>
+                  <th width="20%">등록일자</th>
                 </tr>
               </thead>
               <tbody class="hoverTblBody">
@@ -100,27 +110,36 @@
 
                 <tr>
                   <% Object.keys(messages[i]).forEach(function(key) { %> <% if
-                  (key === 'msg_date' || key === 'del_date' || key ===
-                  'member_id' || key === 'msg_type_code' || key ===
-                  'top_channel_msg_id') { %> <% return; %> <% } %>
+                  (key === 'member_id' || key === 'del_date' || key ===
+                  'connection_id' || key === 'top_channel_msg_id' || key ===
+                  'edit_date') { %> <% return; %> <% } %>
                   <td>
                     <% if (key === 'title') { %>
                     <a href="/message/update?idx=<%=messages[i][key]%>">
                       <%= messages[i][key] %>
                     </a>
-                    <% } else if (key === 'message') { %>
+                    <% } else if (key === 'channel_msg_id') { %>
 
                     <a
-                      href="/message/modify/<%=messages[i]['top_channel_msg_id']%>"
+                      href="/message/modify/<%=messages[i]['channel_msg_id']%>"
                     >
                       <%= messages[i][key] %>
                     </a>
-
-                    <% } else if (key === 'isDisplayCode') { %> <% if
-                    (messages[i][key] === 1) { %>
-                    <p>게시함</p>
+                    <% } else if (key === 'msg_state_code') { %> <% if
+                    (messages[i][key] === 0) { %>
+                    <p>숨김</p>
                     <% } else { %>
-                    <p>게시안함</p>
+                    <p>공개</p>
+
+                    <%} } else if (key === 'msg_type_code') { %> <% if
+                    (messages[i][key] === 0) { %>
+                    <p>퇴장</p>
+                    <% } else if (messages[i][key] === 1) { %>
+                    <p>입장</p>
+                    <% } else if (messages[i][key] === 3) { %>
+                    <p>일반 메세지</p>
+                    <% } else if (messages[i][key] === 4) { %>
+                    <p>파일메세지</p>
                     <% }%> <% } else { %>
                     <p><%= messages[i][key] %></p>
                     <% } %>
@@ -136,3 +155,39 @@
     </div>
   </div>
 </div>
+
+<script>
+  $(document).ready(function () {
+    $("#channel_id").focus();
+    console.log("렌더링완료2. create");
+  });
+
+  $("#searchForm").submit(function () {
+    //debugger;
+    //alert("alert호가인1");
+    console.log(
+      `zz <${$("#channel_id").val()}>, <${$("#nick_name").val()}>, <${$(
+        "#msg_state_code"
+      ).val()}`
+    );
+    if (
+      $("#channel_id").val() === "" &&
+      $("#nick_name").val() === "" &&
+      $("#msg_state_code").val() === ""
+    ) {
+      alert("셋 중 하나는 입력해라.");
+      $("#channel_id").focus();
+      return false;
+    }
+
+    if (
+      $("#channel_id").val() !== ""  && !$.isNumeric($("#channel_id").val())  
+    ) {
+      alert("채널id는 숫자만.");
+      $("#channel_id").focus();
+      return false;
+    }
+  });
+
+  
+</script>

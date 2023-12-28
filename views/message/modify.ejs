@@ -29,7 +29,7 @@
 
         <!--우측 콘텐츠 영역 -->
         <form
-          action="/message/modify/<%=message.top_channel_msg_id%>"
+          action="/message/modify/<%=message.channel_msg_id%>"
           id="messageForm"
           method="post"
         >
@@ -40,13 +40,15 @@
                   <div class="form-group">
                     <label class="control-label">채널ID</label>
                     <select
-                      name="boardTypeCode"
-                      id="boardTypeCode"
+                      name="channel_id"
+                      id="channel_id"
                       class="form-control"
                     >
-                      <option value="0" <% if(message.channel_id === 0) { %> selected <%} %>>전체</option>
-                      <option value="1" <% if(message.channel_id === 1) { %> selected <%} %>>1번 채널</option>
-                      <option value="2" <% if(message.channel_id === 2) { %> selected <%} %>>2번 채널</option>
+                      <option value=0 <% if(message.channel_id === 0) { %> selected <%} %>>전체</option>
+                      <option value=1 <% if(message.channel_id === 1) { %> selected <%} %>>1번 채널</option>
+                      <option value=2 <% if(message.channel_id === 2) { %> selected <%} %>>2번 채널</option>
+                      <option value=3 <% if(message.channel_id === 3) { %> selected <%} %>>3번 채널</option>
+                      <option value=4 <% if(message.channel_id === 4) { %> selected <%} %>>4번 채널</option>
                     </select>
                   </div>
                 </div>
@@ -71,11 +73,8 @@
                       id="msg_state_code"
                       class="form-control"
                     >
-                      <option value="9" <% if( message.msg_state_code === 9) { %> selected <%} %>>전체</option>
-                      <option value="1" <% if( message.msg_state_code === 1) { %> selected <%} %>>입장</option>
-                      <option value="0" <% if( message.msg_state_code === 0) { %> selected <%} %>>퇴장</option>
-                      <option value="3" <% if( message.msg_state_code === 3) { %> selected <%} %>>일반 메세지</option>
-                      <option value="4" <% if( message.msg_state_code === 4) { %> selected <%} %>>파일 메세지</option>
+                      <option value="0" <% if( message.msg_state_code === 0) { %> selected <%} %>>숨김</option>
+                      <option value="1" <% if( message.msg_state_code === 1) { %> selected <%} %>>공개</option>
                     </select>
                   </div>
                 </div>                  

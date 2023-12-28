@@ -39,18 +39,79 @@
               <option value="0">전체</option>
               <option value="1">1번채널</option>
               <option value="2">2번채널</option>
+              <option value="3">3번채널</option>
+              <option value="4">4번채널</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label class="control-label">멤버id</label>
+            <input
+              type="text"
+              name="member_id"
+              id="member_id"
+              class="form-control"
+            />
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label class="control-label">메세지 유형</label>
+            <select
+              name="msg_type_code"
+              id="msg_type_code"
+              class="form-control"
+            >
+              <option value="0">퇴장</option>
+              <option value="1">입장</option>
+              <option value="3">일반메세지</option>
+              <option value="4">파일메세지</option>
             </select>
           </div>
         </div>
       </div>
       <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-4">
           <div class="form-group">
             <label class="control-label">채팅닉네임</label>
             <input
               type="text"
               name="nick_name"
               id="nick_name"
+              class="form-control"
+            />
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label class="control-label">connection_id</label>
+            <input
+              type="text"
+              name="connection_id"
+              id="connection_id"
+              class="form-control"
+            />
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label class="control-label">ip주소</label>
+            <input
+              type="text"
+              name="ip_address"
+              id="ip_address"
+              class="form-control"
+            />
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <div class="form-group">
+            <label class="control-label">최상위채널메세지id</label>
+            <input
+              type="text"
+              name="top_channel_msg_id"
+              id="top_channel_msg_id"
               class="form-control"
             />
           </div>
@@ -81,11 +142,8 @@
               id="msg_state_code"
               class="form-control"
             >
-              <option value="9">전체</option>
-              <option value="0">퇴장</option>
-              <option value="1">입장</option>
-              <option value="3">일반메세지</option>
-              <option value="4">파일메세지</option>
+              <option value="0">숨김</option>
+              <option value="1">공개</option>
             </select>
           </div>
         </div>
