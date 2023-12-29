@@ -32,32 +32,47 @@
       <div class="col-sm-4">
         <div class="form-group d-flex flex-column">
           <label class="control-label">대표 이미지 URL</label>
-          <input type="text" class="form-control" name="channel_img_path" />
+          <input
+            type="text"
+            class="form-control"
+            name="channel_img_path"
+            id="channel_img_path"
+          />
         </div>
       </div>
-      <div class="col-sm-4">
-        <div class="form-group">
-          <label class="control-label">커뮤니티 고유번호</label>
-          <input type="text" class="form-control" name="comunity_id" />
-        </div>
-      </div>
+
       <div class="col-sm-4">
         <div class="form-group">
           <label class="control-label">카테고리 코드</label>
-          <input type="text" class="form-control" name="category_code" />
+          <input
+            type="text"
+            class="form-control"
+            name="category_code"
+            id="category_code"
+          />
         </div>
       </div>
       <div class="col-sm-4">
         <div class="form-group">
           <label class="control-label">동시 채널 접속자 수</label>
-          <input type="number" class="form-control" name="user_limit" />
+          <input
+            type="number"
+            class="form-control"
+            name="user_limit"
+            id="user_limit"
+          />
         </div>
       </div>
 
-      <div class="col-sm-8">
+      <div class="col-sm-12">
         <div class="form-group">
           <label class="control-label">채널명</label>
-          <input type="text" class="form-control" name="channel_name" />
+          <input
+            type="text"
+            class="form-control"
+            name="channel_name"
+            id="channel_name"
+          />
         </div>
       </div>
     </div>
@@ -71,6 +86,7 @@
             rows="10"
             cols="5"
             name="channel_desc"
+            id="channel_desc"
           ></textarea>
         </div>
       </div>
@@ -80,7 +96,12 @@
       <div class="col-sm-4">
         <div class="form-group">
           <label class="control-label">채널 오픈 상태 코드</label>
-          <input type="number" class="form-control" name="channel_state_code" />
+          <input
+            type="number"
+            class="form-control"
+            name="channel_state_code"
+            id="channel_state_code"
+          />
         </div>
       </div>
 
@@ -91,23 +112,106 @@
             type="date"
             class="form-control"
             name="reg_date"
-            value="<%=today%>"
+            id="reg_date"
           />
         </div>
       </div>
       <div class="col-sm-4">
         <div class="form-group">
           <label class="control-label">등록자 고유 번호</label>
-          <input type="text" class="form-control" name="reg_member_id" />
+          <input
+            type="text"
+            class="form-control"
+            name="reg_member_id"
+            id="reg_member_id"
+          />
         </div>
       </div>
     </div>
 
     <div class="text-center">
-      <button type="submit" class="btn btn-primary">저장</button>
+      <button type="submit" class="btn btn-primary" id="button-save">
+        저장
+      </button>
       <a href="/channel/list" class="btn btn-info">목록</a>
     </div>
   </div>
 
-  <script></script>
+  <script>
+    const buttonSave = document.getElementById('button-save');
+
+    const validationCheck = e => {
+      e.preventDefault();
+
+      const infoMessage = type => {
+        alert(`${type} 입력해주세요.`);
+      };
+
+      const channelImgPath = document.getElementById('channel_img_path');
+      const categoryCode = document.getElementById('category_code');
+      const userLimit = document.getElementById('user_limit');
+      const channelName = document.getElementById('channel_name');
+      const channelDesc = document.getElementById('channel_desc');
+      const channelStateCode = document.getElementById('channel_state_code');
+      const regMemberId = document.getElementById('reg_member_id');
+      const regDate = document.getElementById('reg_date');
+
+      if (channelImgPath.value === '') {
+        channelImgPath.focus();
+        e.preventDefault();
+        infoMessage('대표 이미지를');
+        return false;
+      }
+
+      if (categoryCode.value === '') {
+        categoryCode.focus();
+        e.preventDefault();
+        infoMessage('카테고리를');
+        return false;
+      }
+
+      if (userLimit.value === '') {
+        userLimit.focus();
+        e.preventDefault();
+        infoMessage('동시 채널 접속자 수를');
+        return false;
+      }
+
+      if (channelName.value === '') {
+        channelName.focus();
+        e.preventDefault();
+        infoMessage('채널 명을');
+        return false;
+      }
+
+      if (channelDesc.value === '') {
+        channelDesc.focus();
+        e.preventDefault();
+        infoMessage('채널 설명을');
+        return false;
+      }
+      if (channelStateCode.value === '') {
+        channelStateCode.focus();
+        e.preventDefault();
+        infoMessage('채널 상태를');
+        return false;
+      }
+
+      if (regMemberId.value === '') {
+        regMemberId.focus();
+        e.preventDefault();
+        infoMessage('등록자 고유번호를');
+        return false;
+      }
+
+      if (regDate.value === '') {
+        regDate.focus();
+        e.preventDefault();
+        infoMessage('등록일자를');
+        return false;
+      }
+    };
+
+    buttonSave.addEventListener('click', validationCheck);
+  </script>
 </form>
