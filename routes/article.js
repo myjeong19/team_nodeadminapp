@@ -10,53 +10,36 @@ var db = require('../models/index');
 
 /*게시글 목록 정보 조회 웹페이지 요청 라우팅 메소드*/
 router.get("/list", async (req, res, next) => {
-  // var searchOption = {
-  //   boardTypeCode: "0",
-  //   title: "기본",
-  //   isDisplayCode: "9",
-  // };
+
+  var searchOption = {
+    title: "",
+    articleTypeCode: "9",
+    isDisplayCode: "9"
+  };
 
   var articles = await db.Article.findAll();
 
 
-  res.render("article/list", { articles,moment });
+  res.render("article/list", { articles,moment,searchOption });
 });
 
 
 
 router.post("/list", async (req, res) => {
-  // var boardTypeCode = req.body.boardTypeCode;
-  // var title = req.body.title;
-  // var isDisplayCode = req.body.isDisplayCode;
+  var title = req.body.title;
+  var articleTypeCode = req.body.articleTypeCode;
+  var isDisplayCode = req.body.isDisplayCode;
 
-  // var searchOption = {
-  //   boardTypeCode,
-  //   title,
-  //   isDisplayCode,
-  // };
-  // const articles_filtered = articles.filter((article) => {
-  //   console.log("article : ", JSON.stringify(article, null, 2));
-  //   console.log(
-  //     article.boardTypeCode,
-  //     boardTypeCode,
-  //     article.boardTypeCode === boardTypeCode
-  //   );
-  //   if (
-  //     article.boardTypeCode === Number(boardTypeCode) &&
-  //     article.isDisplayCode === Number(isDisplayCode)
-  //   )
-  //     return article;
-  // });
+  var searchOption = {
+    title,
+    articleTypeCode,
+    isDisplayCode,
+  };
 
-  // console.log("searchOption : ", searchOption);
-  // console.log(
-  //   "articles_filterd : ",
-  //   JSON.stringify(articles_filtered, null, 2)
-  // );
 
   var articles = [];
 
-  res.render("article/list", { articles });
+  res.render("article/list", { articles,searchOption });
 });
 
 
@@ -119,15 +102,6 @@ router.get("/modify/:aid", async (req, res, next) => {
 
   //선택한 게시글 고유번호를 파라메터 방식으로 URL을 통해 전달받음.
   var articleIdx = req.params.aid;
-  // // console.log("test modify get, aid : ", articleIdx);
-
-  // if (articleIdx === undefined) res.send("error");
-  // else {
-  //   var article = articles.filter((article) => {
-  //     if (article.articleId === Number(articleIdx)) return article;
-  //   })[0];
-
-  //   console.log("modify article : ", JSON.stringify(article, null, 2));
 
 
     var article = await db.Article.findOne({
