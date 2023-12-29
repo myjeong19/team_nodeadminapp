@@ -1,8 +1,8 @@
 {
   "development": {
     "username": "root",
-    "password": "suk10203!!",
-    "database": "modu_chat",
+    "password": "",
+    "database": "",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
