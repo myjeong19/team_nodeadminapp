@@ -11,6 +11,12 @@
   <link href="/css/style.css" rel="stylesheet" />
 
   <!--추가 스타일-->
+
+  <style>
+    img {
+      width: 50%;
+    }
+  </style>
 </head>
 
 <!--우측 상단 헤더 영역 -->
@@ -69,14 +75,18 @@
             <table class="table table-hover">
               <thead>
                 <tr>
-                  <th width="10%">채널ID</th>
-                  <th width="20%">이름</th>
-                  <th width="10%">카테고리</th>
-                  <th width="20%">소개글</th>
-                  <th width="10%">유저수</th>
-                  <th width="10%">상태</th>
-                  <th width="10%">방장</th>
+                  <th width="5%">채널 고유 번호</th>
+                  <th width="5%">커뮤니티 고유번호</th>
+                  <th width="5%">카테고리 코드</th>
+                  <th width="10%">채널 명</th>
+                  <th width="5%">동시 채널 접속자 수</th>
+                  <th width="10%">대표 이미지</th>
+                  <th width="10%">채널 간략 소개</th>
+                  <th width="10%">채널 오픈 상태 코드</th>
                   <th width="10%">등록일시</th>
+                  <th width="10%">등록자 고유 번호</th>
+                  <th width="10%">수정일시</th>
+                  <th width="10%">수정자 고유 번호</th>
                 </tr>
               </thead>
               <tbody class="hoverTblBody">
@@ -85,19 +95,23 @@
                     <td><a href="/channel/modify/<%=channel_list[i].channel_id%>">
                       <%=channel_list[i].channel_id%>
                     </a></td>
-                    <td><a href="/channel/modify/<%=channel_list[i].channel_id%>">
+                    <td>
                       <%=channel_list[i].channel_name%>
-                    </a>
                     </td>
                     <td>
                       <%=channel_list[i].category_code%>
                     </td>
                     <td>
-                      <%=channel_list[i].channel_desc%>
+                      <%=channel_list[i].channel_name%>
                     </td>
                     <td>
                       <%=channel_list[i].user_limit%>
                     </td>
+                    <td>
+                      <img src="<%= channel_list[i].channel_img_path %>" alt="<%= channel_list[i].channel_name %>">
+                    </td>
+
+                    <td><%= channel_list[i].channel_desc %></td>
                     <td>
                       <% if(channel_list[i].channel_state_code==1){%>
                         채팅중
@@ -105,6 +119,7 @@
                           비활성화
                           <% }%>
                     </td>
+
                     <td>
                       <%=channel_list[i].reg_member_id%>
                     </td>
