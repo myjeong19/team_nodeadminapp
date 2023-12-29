@@ -25,6 +25,7 @@ const sequelize = new Sequelize(
 db.sequelize = sequelize; //DB연결정보를 포함한 DB제어 객체속성(CRUD)
 db.Sequelize = Sequelize; //Sequelize팩키지에서 제공하는 각종 데이터 타입 및 관련 객체정보를 제공함
 
+
 //회원모델 모듈파일 참조하고 db속성정의하기
 
 // db.Member = require('./member.js')(sequelize,Sequelize);
