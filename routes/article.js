@@ -1,141 +1,142 @@
 var express = require("express");
 var router = express.Router();
 
-const articles = [
-  {
-    articleId: 1,
-    boardTypeCode: 1,
-    title: "공지게시글1번글",
-    contents: "1번글 내용",
-    viewCount: 10,
-    ipAddress: "111.111.123.44",
-    articleTypeCode: 0,
-    isDisplayCode: 1,
-    regDate: "2023-12-12",
-    regMemberId: "eddy",
-  },
-  {
-    articleId: 2,
-    boardTypeCode: 2,
-    title: "기술블로깅 1번글",
-    contents: "2번글 내용",
-    viewCount: 12,
-    ipAddress: "111.111.123.42",
-    articleTypeCode: 1,
-    isDisplayCode: 1,
-    regDate: "2023-12-22",
-    regMemberId: "eddy2",
-  },
-  {
-    articleId: 3,
-    boardTypeCode: 1,
-    title: "공지게시글3번글",
-    contents: "3번글 내용",
-    viewCount: 13,
-    ipAddress: "111.111.123.49",
-    articleTypeCode: 1,
-    isDisplayCode: 0,
-    regDate: "2023-12-14",
-    regMemberId: "eddy3",
-  },
-];
-/* GET home page. */
-router.get("/list", function (req, res, next) {
+var moment = require('moment');
+
+//ORM db객체를 참조
+var db = require('../models/index');
+
+
+
+/*게시글 목록 정보 조회 웹페이지 요청 라우팅 메소드*/
+router.get("/list", async (req, res, next) => {
+
   var searchOption = {
-    boardTypeCode: "0",
-    title: "기본",
-    isDisplayCode: "9",
+    title: "",
+    articleTypeCode: "9",
+    isDisplayCode: "9"
   };
-  res.render("article/list", { articles, searchOption });
+
+  var articles = await db.Article.findAll();
+
+
+  res.render("article/list", { articles,moment,searchOption });
 });
 
+
+
 router.post("/list", async (req, res) => {
-  var boardTypeCode = req.body.boardTypeCode;
   var title = req.body.title;
+  var articleTypeCode = req.body.articleTypeCode;
   var isDisplayCode = req.body.isDisplayCode;
 
   var searchOption = {
-    boardTypeCode,
     title,
+    articleTypeCode,
     isDisplayCode,
   };
-  const articles_filtered = articles.filter((article) => {
-    console.log("article : ", JSON.stringify(article, null, 2));
-    console.log(
-      article.boardTypeCode,
-      boardTypeCode,
-      article.boardTypeCode === boardTypeCode
-    );
-    if (
-      article.boardTypeCode === Number(boardTypeCode) &&
-      article.isDisplayCode === Number(isDisplayCode)
-    )
-      return article;
-  });
 
-  console.log("searchOption : ", searchOption);
-  console.log(
-    "articles_filterd : ",
-    JSON.stringify(articles_filtered, null, 2)
-  );
-  res.render("article/list", { articles: articles_filtered, searchOption });
+
+  var articles = [];
+
+  res.render("article/list", { articles,searchOption });
 });
-router.get("/create", function (req, res, next) {
+
+
+
+//신규 게시글 등록 웹페이지 요청
+router.get("/create", async (req, res, next) => {
+
   res.render("article/create");
 });
-router.post("/create", function (req, res, next) {
-  var boardTypeCode = req.body.boardTypeCode;
+
+//신규 게시글 정보를 등록처리
+router.post("/create", async (req, res, next) => {
   var title = req.body.title;
   var contents = req.body.contents;
   var articleTypeCode = req.body.articleTypeCode;
   var isDisplayCode = req.body.isDisplayCode;
-  var register = req.body.register;
+
 
   var article = {
-    boardTypeCode,
+    board_type_code:2,
     title,
     contents,
-    articleTypeCode,
-    isDisplayCode,
-    register,
-    registDate: Date.now(),
+    article_type_code:articleTypeCode,
+    view_count:0,
+    is_display_code:isDisplayCode,
+    ip_address:"111.111.111.111",
+    reg_date:Date.now(),
+    reg_member_id:0,
+    edit_date:Date.now(),
+    edit_member_id:0
   };
-  //어쩔때 redirect?? render??
-  //post에 관련잇는 게 아니라 비지니스 관점에 따라 다름
-  //case1) 등록완료 메세지를 사용자에게 알려주고. -> 확인버튼 누르면 게시글목록 페이지로 이동처리
-  //case2) 친절하게 완료 메세지 안 알려줘도 된다??그럼 redirect가능
+
+  
+  var registedArticle = await db.Article.create(article);
+
+
   res.redirect("/article/list");
 });
 
+
+
+
+//기존 게시글 정보를 삭제처리
 router.get("/delete", async (req, res, next) => {
+
   var articleIdx = req.query.aid;
+
+
+  var deleteCnt = await db.Article.destroy({
+    where:{article_id:articleIdx}
+  });
+
   res.redirect("/article/list");
 });
 
+
+
+//기존 게시글 정보 확인 및 수정 웹페이지 요청
 router.get("/modify/:aid", async (req, res, next) => {
+
   //선택한 게시글 고유번호를 파라메터 방식으로 URL을 통해 전달받음.
   var articleIdx = req.params.aid;
-  console.log("test modify get, aid : ", articleIdx);
 
-  if (articleIdx === undefined) res.send("error");
-  else {
-    var article = articles.filter((article) => {
-      if (article.articleId === Number(articleIdx)) return article;
-    })[0];
 
-    console.log("modify article : ", JSON.stringify(article, null, 2));
+    var article = await db.Article.findOne({
+      where:{ article_id : articleIdx }
+    });
 
-    res.render("article/modify", { article });
+    res.render("article/modify", { article,moment });
   }
-});
-router.post("/modify/:aid", function (req, res, next) {
+);
+
+
+//기존 게시글 정보를 수정처리
+router.post("/modify/:aid", async (req, res, next) => {
+
   var articleIdx = req.params.aid;
 
-  var article = articles.filter((article) => {
-    if (article.articleId === Number(articleIdx)) return article;
-  })[0];
-  console.log("modify post article : ", JSON.stringify(article, null, 2));
+
+  var updateArticle = {
+    title:req.body.title,
+    article_type_code:req.body.articleTypeCode,
+    contents:req.body.contents,
+    ip_address:"222.222.222.222",
+    is_display_code:req.body.isDisplayCode,
+    edit_date:Date.now(),
+    edit_member_id:0
+  };
+
+  var updatedCnt = await db.Article.update(updateArticle,{
+    where:{article_id:articleIdx}
+  });
+
   res.redirect("/article/list");
 });
+
+
+
 
 module.exports = router;

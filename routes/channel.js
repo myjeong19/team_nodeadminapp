@@ -2,184 +2,136 @@
 //http://localhost:3001/channel
 var express = require('express');
 var router = express.Router();
+const db = require('../models/index');
+const handleResultMessage = (result, data, state) => {
+  const resultMessage = {
+    result,
+    data,
+    state,
+  };
+};
 
-// var channel = {
-//   channel_id,
-//   community_id,
-//   category_code,
-//   channel_name,
-//   user_limit,
-//   channel_img_path,
-//   channel_desc,
-//   channel_state_code,
-//   reg_date,
-//   reg_member_id,
-//   edit_date,
-//   edit_member_id
-// }
-
-//localhost:3001/channel
 router.get('/list', async (req, res) => {
-  var channel_list = [
-    {
-      channel_id: 1,
-      community_id: 1,
-      category_code: 1,
-      channel_name: "채팅채널1",
-      user_limit: 100,
-      channel_img_path: "",
-      channel_desc: "",
-      channel_state_code: 1,
-      reg_date: Date.now(),
-      reg_member_id: "yujin___",
-      edit_date: Date.now(),
-      edit_member_id: "yujin___"
-    },
-    {
-      channel_id: 2,
-      community_id: 10,
-      category_code: 1,
-      channel_name: "채팅채널2",
-      user_limit: 100,
-      channel_img_path: "",
-      channel_desc: "",
-      channel_state_code: 1,
-      reg_date: Date.now(),
-      reg_member_id: "yujin1___",
-      edit_date: Date.now(),
-      edit_member_id: "yujin1___"
-    },
-    {
-      channel_id: 3,
-      community_id: 1,
-      category_code: 2,
-      channel_name: "채팅채널1",
-      user_limit: 100,
-      channel_img_path: "",
-      channel_desc: "",
-      channel_state_code: 0,
-      reg_date: Date.now(),
-      reg_member_id: "yujin2___",
-      edit_date: Date.now(),
-      edit_member_id: "yujin2___"
-    }
-  ];
+  const channel_list = await db.Channel.findAll({
+    attributes: [
+      'channel_id',
+      'comunity_id',
+      'category_code',
+      'channel_name',
+      'user_limit',
+      'channel_img_path',
+      'channel_desc',
+      'channel_state_code',
+      'reg_date',
+      'reg_member_id',
+      'edit_date',
+      'edit_member_id',
+    ],
+  });
+
   res.render('channel/list', { channel_list });
 });
 
 //localhost:3001/channel/create
 router.get('/create', async (req, res) => {
-  res.render('channel/create');
+  const date = new Date();
+  const getYear = date.getFullYear();
+  const getMonth = date.getMonth() + 1;
+  const getDate = date.getDate();
+
+  const today = `${getYear}-${getMonth}-${getDate}`;
+
+  res.render('channel/create', { today });
 });
 
 //localhost:3001/channel/create
 router.post('/create', async (req, res) => {
+  const {
+    comunity_id,
+    category_code,
+    channel_name,
+    user_limit,
+    channel_img_path,
+    channel_state_code,
+    channel_desc,
+    reg_date,
+    reg_member_id,
+  } = req.body;
 
-  var channel_id = req.body.channel_id;
-  var community_id = req.body.community_id;
-  var category_code = req.body.category_code;
-  var channel_name = req.body.channel_name;
-  var user_limit = req.body.user_limit;
-  var channel_img_path = req.body.channel_img_path;
-  var channel_desc = req.body.channel_desc;
-  var channel_state_code = req.body.channel_state_code;
-
-  //DB에 저장할 데이터
-  // var channel = {
-  //   channel_id,
-  //   community_id,
-  //   category_code,
-  //   channel_name,
-  //   user_limit,
-  //   channel_img_path,
-  //   channel_desc,
-  //   channel_state_code,
-  //   reg_date:Date.now(),
-  //   reg_member_id:"",
-  //   edit_date:Date.now(),
-  //   edit_member_id:""
-  // }
-
-  var channel = {
-    channel_id: 1,
-    community_id: 1,
-    category_code: 1,
-    channel_name: "채팅채널1",
-    user_limit: 100,
-    channel_img_path: "",
-    channel_desc: "",
-    channel_state_code: 1,
-    reg_date: Date.now(),
-    reg_member_id: "yujin___",
-    edit_date: Date.now(),
-    edit_member_id: "yujin___"
+  const newChannel = {
+    comunity_id,
+    category_code,
+    channel_name,
+    user_limit,
+    channel_img_path,
+    channel_state_code,
+    channel_desc,
+    reg_date,
+    reg_member_id,
+    edit_date: null,
+    edit_member_id: null,
   };
 
-  res.redirect('/channel/list');
+  await db.Channel.create(newChannel);
+
+  res.redirect('list');
 });
 
 //localhost:3001/channel/modify
-router.get('/modify/:cid', async (req, res) => {
-  //임시로 전달할 예제 객체
-  var channel = {
-    channel_id: 1,
-    community_id: 1,
-    category_code: 1,
-    channel_name: "채팅채널1",
-    user_limit: 100,
-    channel_img_path: "",
-    channel_desc: "",
-    channel_state_code: 1,
-    reg_date: Date.now(),
-    reg_member_id: "yujin___",
-    edit_date: Date.now(),
-    edit_member_id: "yujin___"
-  };
+router.get('/modify/:id', async (req, res) => {
+  const channelIndex = req.params.id;
 
-  res.render('channel/modify', {channel});
+  const channel = await db.Channel.findOne({
+    where: { channel_id: channelIndex },
+  });
+
+  res.render('channel/modify', { channel });
 });
 
 //localhost:3001/channel/modify
-router.post('/modify/:cid', async (req, res) => {
-  var channel_id = req.body.channel_id;
-  var community_id = req.body.community_id;
-  var category_code = req.body.category_code;
-  var channel_name = req.body.channel_name;
-  var user_limit = req.body.user_limit;
-  var channel_img_path = req.body.channel_img_path;
-  var channel_desc = req.body.channel_desc;
-  var channel_state_code = req.body.channel_state_code;
+router.post('/modify/:id', async (req, res) => {
+  const channelIndex = req.params.id;
 
-  //DB에 저장할 데이터
-  // var channel = {
-  //   channel_id,
-  //   community_id,
-  //   category_code,
-  //   channel_name,
-  //   user_limit,
-  //   channel_img_path,
-  //   channel_desc,
-  //   channel_state_code,
-  //   reg_date:Date.now(),
-  //   reg_member_id:"",
-  //   edit_date:Date.now(),
-  //   edit_member_id:""
-  // }
+  const {
+    comunity_id,
+    category_code,
+    channel_name,
+    user_limit,
+    channel_img_path,
+    channel_state_code,
+    channel_desc,
+    reg_date,
+    reg_member_id,
+    edit_member_id,
+    edit_date,
+    action,
+  } = req.body;
 
-  var channel = {
-    channel_id: 1,
-    community_id: 1,
-    category_code: 1,
-    channel_name: "채팅채널1",
-    user_limit: 100,
-    channel_img_path: "",
-    channel_desc: "채팅채널1입니다",
-    channel_state_code: 1,
-    reg_date: Date.now(),
-    reg_member_id: "yujin___",
-    edit_date: Date.now(),
-    edit_member_id: "yujin___"
-  };
+  try {
+    if (action === 'save') {
+      const updateChannel = {
+        comunity_id,
+        category_code,
+        channel_name,
+        user_limit,
+        channel_img_path,
+        channel_state_code,
+        channel_desc,
+        reg_date,
+        reg_member_id,
+        edit_member_id,
+        edit_date,
+      };
+
+      await db.Channel.update(updateChannel, {
+        where: { channel_id: channelIndex },
+      });
+    } else {
+      await db.Channel.destroy({ where: { channel_id: channelIndex } });
+    }
+  } catch (error) {
+    console.log(error);
+  }
 
   res.redirect('/channel/list');
 });
