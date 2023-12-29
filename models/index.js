@@ -27,6 +27,7 @@ db.Sequelize = Sequelize; //Sequelize팩키지에서 제공하는 각종 데이�
 
 //회원모델 모듈파일 참조하고 db속성정의하기
 db.Messages = require("./message.js")(sequelize, Sequelize);
+db.ChannelMember = require("./channel_member.js")(sequelize, Sequelize);
 
 //db객체 외부로 노출하기
 module.exports = db;
