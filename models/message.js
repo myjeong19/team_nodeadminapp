@@ -66,7 +66,7 @@ module.exports = function (sequelize, DataTypes) {
       },
       del_date: {
         type: DataTypes.DATE,
-        allowNull: false,
+        allowNull: true,
         comment: "삭제일시",
       },
     },

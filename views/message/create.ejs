@@ -4,7 +4,7 @@
 
   <link href="/css/animate.css" rel="stylesheet" />
   <link href="/css/style.css" rel="stylesheet" />
-
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <!--추가 스타일-->
 </head>
 
@@ -28,7 +28,7 @@
 </div>
 
 <!--우측 콘텐츠 영역 -->
-<form action="/message/create" id="articleForm" method="post">
+<form action="/message/create" id="messageForm" method="post">
   <div class="wrapper wrapper-content">
     <div class="ibox-content m-b-sm border-bottom">
       <div class="row">
@@ -36,7 +36,6 @@
           <div class="form-group">
             <label class="control-label">채널번호</label>
             <select name="channel_id" id="channel_id" class="form-control">
-              <option value="0">전체</option>
               <option value="1">1번채널</option>
               <option value="2">2번채널</option>
               <option value="3">3번채널</option>
@@ -52,6 +51,7 @@
               name="member_id"
               id="member_id"
               class="form-control"
+              placeholder="ex)1234 등의 숫자"
             />
           </div>
         </div>
@@ -79,6 +79,7 @@
               type="text"
               name="nick_name"
               id="nick_name"
+              placeholder="100글자미만"
               class="form-control"
             />
           </div>
@@ -91,6 +92,7 @@
               name="connection_id"
               id="connection_id"
               class="form-control"
+              placeholder="ex)1234등의 숫자"
             />
           </div>
         </div>
@@ -102,6 +104,7 @@
               name="ip_address"
               id="ip_address"
               class="form-control"
+              placeholder="ex)127.0.0.1"
             />
           </div>
         </div>
@@ -113,6 +116,7 @@
               name="top_channel_msg_id"
               id="top_channel_msg_id"
               class="form-control"
+              placeholder="ex)1234등의 숫자"
             />
           </div>
         </div>
@@ -165,36 +169,38 @@
   });
 
   //articleForm에서 submit이 발생하면 function실행.
-  $("#articleForm").submit(function () {
+  $("#messageForm").submit(function () {
     //debugger;
-    if ($("#boardTypeCode").val() === "0") {
-      alert("선택해");
-      $("#boardTypeCode").focus();
+
+    if ($("#member_id").val() === "" || !$.isNumeric($("#member_id").val())) {
+      alert("member id에 숫자를 입력하시오");
+      $("#member_id").focus();
       return false;
     }
-    if ($("#title").val() === "") {
-      alert("제목입력해");
-      $("#title").focus();
+    if ($("#nick_name").val() === "") {
+      alert("닉네임 입력하시오");
+      $("#nick_name").focus();
       return false;
     }
-    if ($("#contents").val() === "") {
-      alert("내용입력해");
-      $("#contents").focus();
+    if (
+      $("#connection_id").val() === "" ||
+      !$.isNumeric($("#connection_id").val())
+    ) {
+      alert("접속id에 숫자를 입력하시오");
+      $("#connection_id").focus();
       return false;
     }
-    if ($("#articleTypeCode").val() === "0") {
-      alert("게시유형 선택해");
-      $("#articleTypeCode").focus();
+    if ($("#ip_address").val() === "") {
+      alert("ip주소 입력해.");
+      $("#ip_address").focus();
       return false;
     }
-    if ($("#isDisplayCode").val() === "0") {
-      alert("게시여부 선택해");
-      $("#isDisplayCode").focus();
-      return false;
-    }
-    if ($("#register").val() === "") {
-      alert("작성자명 선택해");
-      $("#register").focus();
+    if (
+      $("#top_channel_msg_id").val() === "" ||
+      !$.isNumeric($("#top_channel_msg_id").val())
+    ) {
+      alert("최상위 채널msg id에 숫자를 입력하시오");
+      $("#top_channel_msg_id").focus();
       return false;
     }
     //debugger;
