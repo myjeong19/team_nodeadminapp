@@ -2,6 +2,12 @@ const express = require('express');
 const router = express.Router();
 const db = require('../models/index');
 
+const bcrypt = require('bcryptjs');
+
+const AES = require("mysql-aes");
+
+
+
 router.get('/list', async (req, res) => {
   const admins = await db.Admin.findAll({
     attributes: [
@@ -73,13 +79,17 @@ router.post('/create', async (req, res) => {
     reg_date,
   } = req.body;
 
+  var encryptedPassword = await bcrypt.hash(admin_password,12);
+
+  var encryptedTelephone = AES.encrypt(telephone, process.env.MYSQL_AES_KEY);
+
   const newAdmin = {
     company_code,
     admin_id,
-    admin_password,
+    admin_password:encryptedPassword,
     admin_name,
     email,
-    telephone,
+    telephone:encryptedTelephone,
     used_yn_code,
     reg_user_id,
     reg_date,
@@ -102,6 +112,8 @@ router.get('/modify/:id', async (req, res) => {
   const admin = await db.Admin.findOne({
     where: { admin_member_id: adminIndex },
   });
+
+  admin.telephone = AES.decrypt(admin.telephone, process.env.MYSQL_AES_KEY);
 
   res.render('admin/modify', { admin });
 });
