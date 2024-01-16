@@ -2,6 +2,10 @@ const express = require("express");
 const router = express.Router();
 
 var db=require('../models/index');
+var bcrypt = require('bcryptjs');
+var AES = require('mysql-aes');
+
+const {isLoggedIn, isNotLoggedIn} = require('./sessionMiddleware');
 
 var resultMsg='';
 
@@ -10,36 +14,44 @@ var resultMsg='';
 -사용자 계정정보가 아닌 관리자 계정정보를 통한 로그인을 시도합니다
 -http://localhost:3001
 */
-router.get("/", async (req, res) => res.render("login", { layout: false , resultMsg}));
+router.get("/", isNotLoggedIn, async (req, res) => res.render("login", { layout: false , resultMsg:''}));
 
 /*
 -관리자 계정으로 로그인 성공 이후에 최초로 보여줄 관리자 웹사이트 메인페이지
 -반드시 관리자 로그인 성공 후에 접속이 가능합니다
 -http://localhost:3001
 */
-router.post("/", async (req, res) => {
+router.post('/', isNotLoggedIn, async(req,res)=>{
 
   var admin_id=req.body.admin_id;
   var password=req.body.password;
 
-  var login_admin = await db.Admin.findOne({where:{admin_id:admin_id}});
+  var login_member = await db.Admin.findOne({where:{admin_id:admin_id}});
+  console.log(login_member);
 
-  if(login_admin==null){
-    resultMsg='사용자를 찾을 수 없습니다.';
-  }else{
-    if(login_admin.admin_password==password){
-      res.redirect("/main");
+  if(login_member){
+    if(await bcrypt.compare(password, login_member.admin_password)){
+      var sessionLoginData = {
+        admin_member_id: login_member.admin_member_id,
+        company_code: login_member.company_code,
+        admin_id: login_member.admin_id,
+        admin_name: login_member.admin_name
+      };
+
+      req.session.isLoggedIn = true;
+      req.session.loginUser = sessionLoginData;
+      req.session.save(function () {
+        return res.redirect("/main");
+      });
     }else{
-      resultMsg='암호가 일치하지 않습니다.';
+      return res.render('login', {layout:false, resultMsg:"Password not correct."});
     }
-  }
-
-  if(resultMsg!==''){
-    res.render("login", { layout: false , resultMsg});
+  }else{
+    return res.render('login', {layout:false, resultMsg:"Admin member not found."});
   }
 
 });
 
-router.get("/main", async (req, res) => res.render("main"));
+router.get("/main", isLoggedIn, async (req, res) => res.render("main"));
 
 module.exports = router;
