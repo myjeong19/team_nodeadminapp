@@ -6,6 +6,7 @@ const logger = require('morgan');
 const layout = require('express-ejs-layouts');
 require('dotenv').config();
 var sequelize = require('./models/index').sequelize;
+var session = require('express-session');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -17,6 +18,18 @@ const articleRouter = require('./routes/article');
 
 const app = express();
 sequelize.sync();
+
+app.use(session({
+  resave: false,
+  saveUninitialized: true, 
+  secret: "testsecret", 
+  cookie: {
+    httpOnly: true,
+    secure: false,
+    maxAge:1000 * 60 * 5 //5분동안 서버세션을 유지하겠다.(1000은 1초)
+  },
+}),
+);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
