@@ -9,6 +9,7 @@ var sequelize = require("./models/index").sequelize;
 var session = require("express-session");
 
 const indexRouter = require("./routes/index");
+const authRouter = require("./routes/auth");
 const usersRouter = require("./routes/users");
 const adminRouter = require("./routes/admin");
 const channelRouter = require("./routes/channel");
@@ -49,6 +50,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
+app.use("/auth", authRouter);
 app.use("/users", usersRouter);
 app.use("/admin", adminRouter);
 app.use("/article", articleRouter);
