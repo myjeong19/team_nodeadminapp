@@ -19,11 +19,11 @@
     <h2>사용자 정보 관리</h2>
     <ol class="breadcrumb">
       <li>
-        <a href="/main">홈 ></a>
-      </li>
+        <a href="/main">Home</a>
+      </li> > 
       <li>
-        <a>사용자 정보 관리 ></a>
-      </li>
+        <a>사용자 정보 관리</a>
+      </li> > 
       <li class="active">
         <strong>조회</strong>
       </li>
@@ -109,8 +109,12 @@
                   <% } else{ %>
                   <td>탈퇴</td>
                   <% }%>
-                  <td><%= member_list[i].reg_date %></td>
-                  <td><%= member_list[i].edit_date %></td>
+                  <td><%= moment(member_list[i].reg_date).format('YYYY-MM-DD HH:mm:ss') %></td>
+                  <% if(member_list[i].edit_date){%>
+                    <td><%=moment(member_list[i].edit_date).format('YYYY-MM-DD HH:mm:ss') %></td>
+                  <% } else { %>
+                    <td></td>
+                  <% } %>
                 </tr>
                 <% } %>
               </tbody>

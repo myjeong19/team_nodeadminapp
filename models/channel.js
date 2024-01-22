@@ -33,7 +33,7 @@ module.exports = function (sequelize, DataTypes) {
       },
       channel_img_path: {
         type: DataTypes.STRING(200),
-        allowNull: false,
+        allowNull: true,
         comment: '대표 이미지',
       },
       channel_desc: {
