@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var db = require('../models/index');
+var moment = require('moment');
 
 //member조회
 router.get('/list', async (req, res, next) => {
@@ -19,7 +20,7 @@ router.get('/list', async (req, res, next) => {
     }
   )
 
-  res.render('member/list', { member_list, searchOption });
+  res.render('member/list', { member_list, searchOption, moment });
 });
 
 router.post('/list', async (req, res, next) => {
@@ -42,7 +43,7 @@ router.post('/list', async (req, res, next) => {
 
   console.log("멤버리스트:", member_list);
 
-  res.render('member/list', { member_list, searchOption });
+  res.render('member/list', { member_list, searchOption, moment });
 });
 
 
@@ -60,6 +61,7 @@ router.post('/create', async (req, res, next) => {
   var telephone = req.body.telephone;
   var entry_type_code = req.body.entry_type_code;
   var birth_date = req.body.birth_date;
+  var reg_member_id = req.body.reg_member_id;
 
 
   var member = {
@@ -72,7 +74,7 @@ router.post('/create', async (req, res, next) => {
     use_state_code: 1,
     birth_date,
     reg_date: Date.now(),
-    reg_member_id: 881
+    reg_member_id
   };
 
   // console.log('member : ', member);
@@ -102,7 +104,7 @@ router.get('/modify/:member_id', async (req, res, next) => {
 
   var member = await db.Member.findOne({ where: { member_id: member_id } });
 
-  res.render('member/modify', { member });
+  res.render('member/modify', { member, moment });
 });
 
 router.post('/modify/:member_id', async (req, res, next) => {

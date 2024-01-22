@@ -25,11 +25,11 @@
     <h2>채널 정보 관리</h2>
     <ol class="breadcrumb">
       <li>
-        <a href="/Home/Index">Home</a>
-      </li>
+        <a href="/main">Home</a>
+      </li> > 
       <li>
         <a>채널 정보 관리</a>
-      </li>
+      </li> > 
       <li class="active">
         <strong>조회</strong>
       </li>
@@ -78,32 +78,30 @@
                   <th width="5%">채널 고유 번호</th>
                   <th width="5%">커뮤니티 고유번호</th>
                   <th width="5%">카테고리 코드</th>
-                  <th width="10%">채널 명</th>
+                  <th width="10%">채널명</th>
                   <th width="5%">동시 채널 접속자 수</th>
                   <th width="10%">대표 이미지</th>
                   <th width="10%">채널 간략 소개</th>
                   <th width="10%">채널 오픈 상태 코드</th>
-                  <th width="10%">등록일시</th>
-                  <th width="10%">등록자 고유 번호</th>
-                  <th width="10%">수정일시</th>
-                  <th width="10%">수정자 고유 번호</th>
+                  <th width="5%">등록자</th>
+                  <th width="15%">등록일</th>
                 </tr>
               </thead>
               <tbody class="hoverTblBody">
                 <% for(var i=0;i<channel_list.length;i++){ %>
                   <tr>
-                    <td><a href="/channel/modify/<%=channel_list[i].channel_id%>">
-                      <%=channel_list[i].channel_id%>
-                    </a></td>
                     <td>
-                      <%=channel_list[i].channel_name%>
+                      <%=channel_list[i].channel_id%>
+                    </td>
+                    <td>
+                      <%=channel_list[i].comunity_id%>
                     </td>
                     <td>
                       <%=channel_list[i].category_code%>
                     </td>
-                    <td>
+                    <td><a href="/channel/modify/<%=channel_list[i].channel_id%>">
                       <%=channel_list[i].channel_name%>
-                    </td>
+                    </a></td>
                     <td>
                       <%=channel_list[i].user_limit%>
                     </td>
@@ -114,9 +112,13 @@
                     <td><%= channel_list[i].channel_desc %></td>
                     <td>
                       <% if(channel_list[i].channel_state_code==1){%>
-                        채팅중
+                        <b class="label label-primary">
+                        사용중
+                      </b>
                         <% } else{ %>
-                          비활성화
+                          <b class="label">
+                            미사용
+                          </b>
                           <% }%>
                     </td>
 
@@ -124,7 +126,7 @@
                       <%=channel_list[i].reg_member_id%>
                     </td>
                     <td>
-                      <%=channel_list[i].reg_date%>
+                      <%=moment(channel_list[i].reg_date).format('YYYY-MM-DD HH:mm:ss')%>
                     </td>
                   </tr>
                   <% } %>

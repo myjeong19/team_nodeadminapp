@@ -11,14 +11,16 @@
 <!--우측 콘텐츠 헤더영역 -->
 <div class="row wrapper border-bottom white-bg page-heading">
   <div class="col-lg-10">
-    <h2>채팅방 생성</h2>
+    <h2>채널 정보 관리</h2>
     <ol class="breadcrumb">
       <li>
-        <a href="/main">홈</a>
-      </li>
-      >
+        <a href="/main">Home</a>
+      </li> > 
       <li>
-        <a>채팅방 생성</a>
+        <a>채널 정보 관리</a>
+      </li> > 
+      <li class="active">
+        <strong>신규</strong>
       </li>
     </ol>
   </div>
@@ -31,12 +33,12 @@
     <div class="row">
       <div class="col-sm-4">
         <div class="form-group d-flex flex-column">
-          <label class="control-label">대표 이미지 URL</label>
+          <label class="control-label">커뮤니티 코드</label>
           <input
             type="text"
             class="form-control"
-            name="channel_img_path"
-            id="channel_img_path"
+            name="comunity_id"
+            id="comunity_id"
           />
         </div>
       </div>
@@ -96,12 +98,12 @@
       <div class="col-sm-4">
         <div class="form-group">
           <label class="control-label">채널 오픈 상태 코드</label>
-          <input
-            type="number"
-            class="form-control"
-            name="channel_state_code"
-            id="channel_state_code"
-          />
+          <select class="form-control" 
+            name="channel_state_code" 
+            id="channel_state_code" >
+              <option value="1">사용중</option>
+              <option value="0">미사용</option>
+          </select>
         </div>
       </div>
 
@@ -138,6 +140,8 @@
   </div>
 
   <script>
+    $('#reg_date').val(new Date().toISOString().substring(0,10));
+
     const buttonSave = document.getElementById('button-save');
 
     const validationCheck = e => {
@@ -147,7 +151,7 @@
         alert(`${type} 입력해주세요.`);
       };
 
-      const channelImgPath = document.getElementById('channel_img_path');
+      const comunityID = document.getElementById('comunity_id');
       const categoryCode = document.getElementById('category_code');
       const userLimit = document.getElementById('user_limit');
       const channelName = document.getElementById('channel_name');
@@ -156,10 +160,10 @@
       const regMemberId = document.getElementById('reg_member_id');
       const regDate = document.getElementById('reg_date');
 
-      if (channelImgPath.value === '') {
-        channelImgPath.focus();
+      if (comunityID.value === '') {
+        comunityID.focus();
         e.preventDefault();
-        infoMessage('대표 이미지를');
+        infoMessage('커뮤니티를');
         return false;
       }
 
@@ -204,14 +208,15 @@
         return false;
       }
 
-      if (regDate.value === '') {
-        regDate.focus();
-        e.preventDefault();
-        infoMessage('등록일자를');
-        return false;
-      }
+      // if (regDate.value === '') {
+      //   regDate.focus();
+      //   e.preventDefault();
+      //   infoMessage('등록일자를');
+      //   return false;
+      // }
     };
 
     buttonSave.addEventListener('click', validationCheck);
+    return true;
   </script>
 </form>

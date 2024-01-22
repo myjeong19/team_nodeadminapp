@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../models/index');
+var moment = require('moment');
 
 router.get('/list', async (req, res) => {
   const admins = await db.Admin.findAll({
@@ -20,7 +21,7 @@ router.get('/list', async (req, res) => {
     ],
   });
 
-  res.render('admin/list', { admins });
+  res.render('admin/list', { admins, moment });
 });
 
 router.post('/list', async (req, res) => {
@@ -37,21 +38,21 @@ router.post('/list', async (req, res) => {
       const admins = await db.Admin.findAll({
         where: { admin_name: searchOption.admin_name },
       });
-      res.render('admin/list', { admins });
+      res.render('admin/list', { admins, moment });
     }
 
     if (admin_id) {
       const admins = await db.Admin.findAll({
         where: { admin_id: searchOption.admin_id },
       });
-      res.render('admin/list', { admins });
+      res.render('admin/list', { admins, moment });
     }
 
     if (used_yn_code) {
       const admins = await db.Admin.findAll({
         where: { used_yn_code: searchOption.used_yn_code },
       });
-      res.render('admin/list', { admins });
+      res.render('admin/list', { admins, moment });
     }
   } catch (error) {}
 });
@@ -103,11 +104,14 @@ router.get('/modify/:id', async (req, res) => {
     where: { admin_member_id: adminIndex },
   });
 
-  res.render('admin/modify', { admin });
+  res.render('admin/modify', { admin, moment });
 });
 
 router.post('/modify/:id', async (req, res) => {
   const adminIndex = req.params.id;
+
+  //view 화면에 moment 포맷을 지정해서
+  //req.body로 값을 받아오면 data포맷이 꼬일까봐 해당 속성 삭제했습니다 +수정하지 않아도 되는 속성값
   const {
     admin_member_id,
     company_code,
@@ -115,8 +119,6 @@ router.post('/modify/:id', async (req, res) => {
     used_yn_code,
     admin_name,
     telephone,
-    reg_user_id,
-    reg_date,
     edit_user_id,
     edit_date,
     action,
@@ -130,10 +132,8 @@ router.post('/modify/:id', async (req, res) => {
       used_yn_code,
       admin_name,
       telephone,
-      reg_user_id,
-      reg_date,
       edit_user_id,
-      edit_date,
+      edit_date:Date.now(),
     };
 
     await db.Admin.update(updateAdmin, {

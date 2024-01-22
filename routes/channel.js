@@ -3,6 +3,7 @@
 var express = require('express');
 var router = express.Router();
 const db = require('../models/index');
+var moment = require('moment');
 const handleResultMessage = (result, data, state) => {
   const resultMessage = {
     result,
@@ -29,7 +30,7 @@ router.get('/list', async (req, res) => {
     ],
   });
 
-  res.render('channel/list', { channel_list });
+  res.render('channel/list', { channel_list, moment });
 });
 
 //localhost:3001/channel/create
@@ -47,6 +48,7 @@ router.get('/create', async (req, res) => {
 //localhost:3001/channel/create
 router.post('/create', async (req, res) => {
   const {
+    comunity_id,
     category_code,
     channel_name,
     user_limit,
@@ -58,13 +60,14 @@ router.post('/create', async (req, res) => {
   } = req.body;
 
   const newChannel = {
+    comunity_id,
     category_code,
     channel_name,
     user_limit,
     channel_img_path,
     channel_state_code,
     channel_desc,
-    reg_date,
+    reg_date: Date.now(),
     reg_member_id,
     edit_date: null,
     edit_member_id: null,
@@ -72,7 +75,7 @@ router.post('/create', async (req, res) => {
 
   await db.Channel.create(newChannel);
 
-  res.redirect('list');
+  res.redirect('/channel/list');
 });
 
 //localhost:3001/channel/modify
@@ -83,7 +86,7 @@ router.get('/modify/:id', async (req, res) => {
     where: { channel_id: channelIndex },
   });
 
-  res.render('channel/modify', { channel });
+  res.render('channel/modify', { channel, moment });
 });
 
 //localhost:3001/channel/modify
@@ -106,27 +109,23 @@ router.post('/modify/:id', async (req, res) => {
   } = req.body;
 
   try {
-    if (action === 'save') {
-      const updateChannel = {
-        comunity_id,
-        category_code,
-        channel_name,
-        user_limit,
-        channel_img_path,
-        channel_state_code,
-        channel_desc,
-        reg_date,
-        reg_member_id,
-        edit_member_id,
-        edit_date,
-      };
+    const updateChannel = {
+      comunity_id,
+      category_code,
+      channel_name,
+      user_limit,
+      channel_img_path,
+      channel_state_code,
+      channel_desc,
+      reg_date,
+      reg_member_id,
+      edit_member_id,
+      edit_date,
+    };
 
-      await db.Channel.update(updateChannel, {
-        where: { channel_id: channelIndex },
-      });
-    } else {
-      await db.Channel.destroy({ where: { channel_id: channelIndex } });
-    }
+    await db.Channel.update(updateChannel, {
+      where: { channel_id: channelIndex },
+    });
   } catch (error) {
     console.log(error);
   }
@@ -134,8 +133,10 @@ router.post('/modify/:id', async (req, res) => {
   res.redirect('/channel/list');
 });
 
-router.get('/delete', async (req, res) => {
-  res.render('channel/delete');
+router.get('/delete', async (req, res, next) => {
+  var channel_id = req.query.channel_id;
+  await db.Channel.destroy({ where: { channel_id: channel_id } });
+  res.redirect('/channel/list');
 });
 
 module.exports = router;
