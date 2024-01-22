@@ -47,7 +47,6 @@ router.get('/create', async (req, res) => {
 //localhost:3001/channel/create
 router.post('/create', async (req, res) => {
   const {
-    comunity_id,
     category_code,
     channel_name,
     user_limit,
@@ -59,7 +58,6 @@ router.post('/create', async (req, res) => {
   } = req.body;
 
   const newChannel = {
-    comunity_id,
     category_code,
     channel_name,
     user_limit,

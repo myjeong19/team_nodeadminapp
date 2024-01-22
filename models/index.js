@@ -5,8 +5,8 @@ const Sequelize = require("sequelize");
 const env = process.env.NODE_ENV || "development";
 
 //DB연결 환경설정정보 변경처리//관련정보 수정
-//const config = require(path.join(__dirname, "..", "config", "config.js"))[env];
 const config = require("../config/config.js")[env];
+
 //데이터 베이스 객체
 const db = {};
 console.log("config : ", config);
@@ -29,8 +29,6 @@ db.Member = require("./member.js")(sequelize, Sequelize);
 db.Admin = require("./admin.js")(sequelize, Sequelize);
 db.Channel = require("./channel.js")(sequelize, Sequelize);
 db.Messages = require("./message.js")(sequelize, Sequelize);
-//db.ChannelMessage = require("./channelMessage.js")(sequelize, Sequelize);
-//db.ChannelMember = require("./channelMember.js")(sequelize, Sequelize);
 db.Article = require("./article.js")(sequelize, Sequelize);
 db.ArticleFile = require("./articleFile.js")(sequelize, Sequelize);
 
