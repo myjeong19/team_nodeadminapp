@@ -2,52 +2,9 @@ var express = require("express");
 var router = express.Router();
 var db = require("../models/index");
 var Op = db.Sequelize.Op;
-/* GET home page. */
+var moment = require('moment');
 
-// const messages = [
-//   {
-//     channel_id: 1,
-//     member_id: 1,
-//     nick_name: "hwoarang09",
-//     msg_type_code: 111,
-//     connection_id: "접속아디1",
-//     message: "메세지1",
-//     ip_address: "111.111.123.44",
-//     top_channel_msg_id: 1111,
-//     msg_state_code: 1,
-//     msg_date: Date.now(),
-//     edit_date: Date.now(),
-//     del_date: Date.now(),
-//   },
-//   {
-//     channel_id: 1,
-//     member_id: 2,
-//     nick_name: "ysw",
-//     msg_type_code: 222,
-//     connection_id: "접속아디2",
-//     message: "메세지2",
-//     ip_address: "111.222.222.44",
-//     top_channel_msg_id: 2222,
-//     msg_state_code: 0,
-//     msg_date: Date.now(),
-//     edit_date: Date.now(),
-//     del_date: Date.now(),
-//   },
-//   {
-//     channel_id: 2,
-//     member_id: 1,
-//     nick_name: "hwoarang09",
-//     msg_type_code: 333,
-//     connection_id: "접속아디3",
-//     message: "메세지3",
-//     ip_address: "111.333.123.44",
-//     top_channel_msg_id: 3333,
-//     msg_state_code: 1,
-//     msg_date: Date.now(),
-//     edit_date: Date.now(),
-//     del_date: Date.now(),
-//   },
-// ];
+//더미데이터 삭제처리했습니다.
 
 router.get("/list", async (req, res, next) => {
   var searchOption = {
@@ -75,7 +32,8 @@ router.get("/list", async (req, res, next) => {
   messages = messages.map((arr) => {
     return arr.dataValues;
   });
-  res.render("message/list", { messages, searchOption });
+  
+  res.render("message/list", { messages, searchOption, moment });
 });
 
 router.post("/list", async (req, res, next) => {
@@ -104,7 +62,7 @@ router.post("/list", async (req, res, next) => {
     return arr.dataValues;
   });
   console.log("searchOption : ", searchOption);
-  res.render("message/list", { messages, searchOption });
+  res.render("message/list", { messages, searchOption, moment });
 });
 
 router.get("/create", async (req, res, next) => {

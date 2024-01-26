@@ -1,81 +1,130 @@
-const express = require('express');
-const router = express.Router();
-
+var express = require('express');
+var router = express.Router();
 var db = require('../models/index');
-var bcrypt = require('bcryptjs');
+const member = require('../models/member');
+var Op = db.Sequelize.Op;
+const jwt = require('jsonwebtoken');
 var AES = require('mysql-aes');
+var bcrypt = require('bcryptjs');
 
-const { isLoggedIn, isNotLoggedIn } = require('./sessionMiddleware');
+/* GET home page. */
 
-var resultMsg = '';
+// router.get("/login", async (req, res) => res.render("login", { layout: true }));
 
-/*
--관리자 웹사이트의 로그인 웹페이지를 제공하는 라우팅 메소드
--사용자 계정정보가 아닌 관리자 계정정보를 통한 로그인을 시도합니다
--http://localhost:3001
-*/
-router.get('/', isNotLoggedIn, async (req, res) => {
-  const KAKAO_AUTH_URL = process.env.KAKAO_AUTH_URL;
+router.get('/', async (req, res) =>
+  res.render('login', { resultMsg: '', email: '', password: '', layout: true })
+);
 
-  res.render('login', {
-    layout: false,
-    resultMsg: '',
-    KAKAO_AUTH_URL,
-  });
-});
+// router.get("/index", async (req, res, next) => {
+//   res.render("index", { title: "login", layout: false });
+// });
 
-/*
--관리자 계정으로 로그인 성공 이후에 최초로 보여줄 관리자 웹사이트 메인페이지
--반드시 관리자 로그인 성공 후에 접속이 가능합니다
--http://localhost:3001
-*/
-router.post('/', isNotLoggedIn, async (req, res) => {
-  var admin_id = req.body.admin_id;
-  var password = req.body.password;
+router.post('/', async (req, res, next) => {
+  let email = req.body.email;
+  let password = req.body.password;
 
-  var login_member = await db.Admin.findOne({ where: { admin_id: admin_id } });
-  console.log(login_member);
+  let member = await db.Member.findOne({ where: { email } });
 
-  if (login_member) {
-    if (await bcrypt.compare(password, login_member.admin_password)) {
-      var sessionLoginData = {
-        admin_member_id: login_member.admin_member_id,
-        company_code: login_member.company_code,
-        admin_id: login_member.admin_id,
-        admin_name: login_member.admin_name,
-      };
+  //로그인 로직 구현
+  resultMsg = '';
 
-      req.session.isLoggedIn = true;
-      req.session.loginUser = sessionLoginData;
-      req.session.save(function () {
-        return res.redirect('/main');
-      });
-    } else {
-      return res.render('login', {
-        layout: false,
-        resultMsg: 'Password not correct.',
-      });
-    }
+  if (member == null) {
+    resultMsg = '이메일이 일치하지 않습니다.';
   } else {
-    return res.render('login', {
-      layout: false,
-      resultMsg: 'Admin member not found.',
-    });
+    if (member.member_password == password) {
+      res.redirect('/chat');
+    } else {
+      resultMsg = '비밀번호가 일치하지 않습니다.';
+    }
+  }
+
+  if (resultMsg != '') {
+    res.render('login', { resultMsg, email, password });
   }
 });
 
-router.post('/kakao/login', async () => {
-  let token;
-  try {
-    token = await fetch('https://kauth.kakao.com/oauth/token', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-    }).then(data => {});
-  } catch (error) {}
+router.get('/entry', async (req, res, next) => {
+  res.render('entry');
 });
 
-router.get('/main', isLoggedIn, async (req, res) => res.render('main'));
+router.post('/entry', async (req, res, next) => {
+  let email = req.body.email;
+  let name = req.body.name;
+  let member_password = req.body.member_password;
+  let confirm_member_password = req.body.confirm_member_password;
+  let telephone = req.body.telephone;
+  let birth_date = req.body.birth_date;
+  let entry_type_code = req.body.entry_type_code;
+
+  let member = {
+    email,
+    member_password,
+    confirm_member_password,
+    name,
+    profile_img_path: 1,
+    telephone,
+    entry_type_code,
+    use_state_code: 1,
+    birth_date,
+    reg_date: Date.now(),
+    reg_member_id: 1,
+  };
+
+  let savedMember = await db.Member.create(member);
+
+  res.redirect('/');
+});
+
+router.get('/find', async (req, res, next) => {
+  res.render('find', { resultMsg: '', email: '' });
+});
+
+router.post('/find', async (req, res, next) => {
+  let email = req.body.email;
+
+  let findEmail = await db.Member.findOne({ where: { email } });
+
+  resultMsg = '';
+
+  if (findEmail === null) {
+    resultMsg = '존재하지 않는 이메일입니다.';
+    res.render('find', { resultMsg, email });
+  } else {
+    res.redirect('/');
+  }
+});
+
+//암호찾기 재설정 페이지 -password-init- 부분 구현 라우팅 메소드, Backend로 처리
+//http://localhost:3000/password-init?token=~
+router.get('/password-init', async (req, res, next) => {
+  const token = req.query.token;
+
+  try {
+    var tokenData = await jwt.verify(token, process.env.JWT_SECRET);
+    //decrypt된 json 데이터 전송
+    res.render('password-init', {
+      code: 200,
+      data: tokenData,
+      resultMsg: 'OK',
+    });
+  } catch (err) {
+    console.log('This address is unvalid.');
+    res.redirect('/login.html');
+  }
+});
+
+router.post('/password-init', async (req, res, next) => {
+  var email = req.body.email;
+  var password = req.body.password;
+
+  const member = await db.Member.findOne({ where: { email: email } });
+  member.member_password = await bcrypt.hash(password, 12);
+  await db.Member.update(member, { where: { email: email } });
+
+  console.log('Password update complete');
+
+  res.redirect('/login.html');
+  // res.redirect('/');
+});
 
 module.exports = router;
